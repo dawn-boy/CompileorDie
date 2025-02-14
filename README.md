@@ -87,5 +87,5 @@ Players are secretly assigned roles as either Hackers or Developers. The Hackers
     - can't even control their own fate..
 
 14. Endgame
-		- The results
-		- showcasing the role of each player and their activity throughout the game
+    - The results
+    - showcasing the role of each player and their activity throughout the game
