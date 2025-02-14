@@ -2,12 +2,14 @@
 const express = require( 'express' )
 const path = require( 'path' )
 const mongoose = require( 'mongoose' )
+const ejsMate = require('ejs-mate')
 
 
 // express set-up
 const app = express();
 app.use( express.static( path.join( __dirname, 'public' ) ) )
 app.use(express.urlencoded( { extends: true } ))
+app.engine( 'ejs',ejsMate )
 app.set( 'view engine', 'ejs' )
 app.set( 'views', path.join( __dirname, 'views' ) )
 

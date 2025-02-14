@@ -1,13 +1,10 @@
-<html>
-		<head></head>
-		<body>
-				<h1>This is the login page</h1>
-				<form action="/lobby">
-						<input placeholder="Username" type='text' name='username'>
-						<input placeholder="Password" type='password' name='password'>
-						<input placeholder="Player's name" type='text' name='name'>
-						<input placeholder='Team code' type='text' name='code'>
-						<button>Submit</button>
-				</form>
-		</body>
-</html>
+<% layout('layout/boilerplate.ejs') %>
+
+<h1>This is the login page</h1>
+<form action="/lobby">
+		<input placeholder="Username" type='text' name='username'>
+		<input placeholder="Password" type='password' name='password'>
+		<input placeholder="Player's name" type='text' name='name'>
+		<input placeholder='Team code' type='text' name='code'>
+		<button>Submit</button>
+</form>
