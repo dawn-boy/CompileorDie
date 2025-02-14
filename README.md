@@ -1,91 +1,96 @@
-# Erebor
-Players are secretly assigned roles as either Hackers or Developers. The Hackers' goal is to sabotage the code and cause a system crash, while the Developers must work together to find the Hackers and fix the broken code before it's too late. Special roles like the Debugger, who can fix corrupted code, and the Cyber Guardian, who can investigate other players, add complexity and excitement to the game.
+# 🕵️‍♂️ Erebor: A Social Deduction Game for Developers
 
-## Sequence
-- Phase 1:
-  - Everyone gets a question and codes their answer
-  - Hacker gets the choice to bug someone
-- Phase 2:
-  - Hacker bugs the chosen guy's code
-  - Debugger gets the choice to debug someone
-  - Cyber Guardian can sus out someone and see if they were right
-  - Developers are doing filler tasks
-    
-- Phase 3:
-  - Discussion and voting phase
-  - hacker creates confusion
-  - if debugger managed to debug the buggy code, Everyone's safe. Or else bugman is fired
-  - if cyber guardian managed to find out who the sussy bakka was.. he should somehow get everyone to believe him without giving away his identity
+Are you a **Developer**, fixing broken code and hunting for Hackers? Or are you a **Hacker**, secretly sabotaging the system? Play smart, deceive wisely, and survive until the end!
 
-- The game loops above phases until
-   - there's only two players including the hacker
-   - the hacker's found and killed ruthelessly
+## 📜 Table of Contents
+- [About the Game](#about-the-game)
+- [How to Play](#how-to-play)
+- [Roles](#roles)
+- [Game Phases](#game-phases)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Routes](#routes)
+- [License](#license)
 
+## 🎮 About the Game
+Erebor is a **web-based social deduction game** where players take on the roles of Developers or Hackers. The Developers must identify and eliminate the Hackers before the system crashes. With special roles like **Debugger** and **Cyber Guardian**, each game is a strategic battle of deception and deduction!
 
+## 🕹 How to Play
+1. Players are randomly assigned roles at the start of the game.
+2. The game progresses in **three phases**:
+   - **Coding & Sabotage**: Players answer coding questions while the Hacker sabotages.
+   - **Actions & Investigations**: Debugger fixes corrupted code, Cyber Guardian investigates.
+   - **Discussion & Voting**: Players discuss, vote, and eliminate suspected Hackers.
+3. The game ends when:
+   - The **Hackers** outnumber the **Developers**.
+   - The **Hacker is eliminated** before taking over.
 
-## Routes
-- / ![req](https://img.shields.io/badge/get-blue)
-- /login ![req](https://img.shields.io/badge/get-blue) ![req](https://img.shields.io/badge/post-red)
-- /question ![req](https://img.shields.io/badge/post-red)
-- /lobby ![req](https://img.shields.io/badge/get-blue)
-- /hacker ![req](https://img.shields.io/badge/get-blue)
-- /debugger ![req](https://img.shields.io/badge/get-blue)
-- /cyberGuardian ![req](https://img.shields.io/badge/get-blue)
-- /developer ![req](https://img.shields.io/badge/get-blue)
-- /endgame ![req](https://img.shields.io/badge/get-blue)
+## 🎭 Roles
 
+| Role           | Abilities & Goals |  
+|---------------|------------------|  
+| **Hacker** 🦠  | Sabotages the system by corrupting code. Wins if the Developers fail to find them. |  
+| **Developer** 👨‍💻 | Fixes code and eliminates Hackers before they take over. |  
+| **Debugger** 🛠 | Can repair corrupted code once per round. |  
+| **Cyber Guardian** 🕵️‍♂️ | Investigates one player per round to detect Hackers. |  
 
-## Tech-stack
-### Front-end
-1. HTML
-2. CSS
-3. Javascript
-4. EJS
+## 🔄 Game Phases
 
-### Back-end
-1. Node.js
-2. MongoDB
-   
-## Pages
+### **1️⃣ Coding & Sabotage**
+- Players answer a coding question.
+- The **Hacker** selects a player to sabotage.
 
-0. Home
-   - Game Desc
-   - Login redirect
+### **2️⃣ Actions & Investigations**
+- **Debugger** attempts to fix corrupted code.
+- **Cyber Guardian** investigates one player.
+- **Developers** continue their coding tasks.
 
-2. Login
-   - username field
-   - pass field
-   - enter player's name
-   - join a team
-   - submit button
+### **3️⃣ Discussion & Voting**
+- Players discuss their suspicions.
+- Everyone votes to eliminate a player.
+- If a **Hacker is voted out, the Developers win**. If not, the cycle continues.
 
-4. Lobby
-   - ready status of team players
-   - ready button
-   - randomly assigns the roles when the game begins
+## 🛠 Tech Stack
+- **Frontend**: HTML, CSS, JavaScript, EJS
+- **Backend**: Node.js, Express.js, MongoDB
+- **Authentication**: Sessions & Player ID Management
 
-6. Hacker
-   - [if its phase 1] gets to choose whom to bug
-   - [if its phase 2] gets the chosen one's code to bug
-   - gets a question just like other players
-   - code execution and submission 
+## 🚀 Installation & Setup
 
-8. Debugger
-   - [if its phase 2] gets to choose whom to debug
-   - [if its phase 3] gets the chosen one's code to debug
-   - gets a question just like other players
-   - code execution and submission 
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/your-username/erebor.git  
+   cd erebor  
+   ```  
+2. **Install dependencies**
+   ```sh
+   npm install  
+   ```  
+3. **Start the server**
+   ```sh
+   nodemon  
+   ```  
+4. **Open the game in your browser**
+   ```
+   http://localhost:8000  
+   ```
 
-10. Cyber guardian
-    - has the power to check if their sus is true (once per cycle)
-    - gets a question just like other players
-    - code execution and submission 
+## 🌐 API & Routes
 
-12. Developers
-    - gets a question just like other players
-    - code execution and submission
-    - can't even control their own fate..
+| Route        | Purpose |  
+|-------------|--------|  
+| `/`         | Game description & login |  
+| `/login`    | Player authentication |  
+| `/lobby`    | Assigns roles & prepares game start |  
+| `/question` | Players answer coding questions |  
+| `/hacker`   | Hacker performs sabotage |  
+| `/debugger` | Debugger attempts to fix code |  
+| `/cyberGuardian` | Cyber Guardian investigates players |  
+| `/endgame`  | Game results & winner announcement |  
 
-14. Endgame
-    - The results
-    - showcasing the role of each player and their activity throughout the game
+## 🤝 Contributing
+Want to improve Erebor? Contributions are welcome! Simply fork the repo, create a branch, and submit a PR.
+
+## 🎮 Ready to Play?
+Join the battle between **Hackers and Developers** now! Clone the repo and start coding! 💻🔥
+
