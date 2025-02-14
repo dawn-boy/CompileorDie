@@ -9,8 +9,8 @@ Are you a **Developer**, fixing broken code and hunting for Hackers? Or are you 
 - [Game Phases](#game-phases)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-- [Routes](#routes)
-- [License](#license)
+- [API & Routes](#api-&-routes)
+- [Contributing](#contributing)
 
 ## 🎮 About the Game
 Erebor is a **web-based social deduction game** where players take on the roles of Developers or Hackers. The Developers must identify and eliminate the Hackers before the system crashes. With special roles like **Debugger** and **Cyber Guardian**, each game is a strategic battle of deception and deduction!
