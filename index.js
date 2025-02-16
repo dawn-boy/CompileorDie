@@ -2,6 +2,7 @@
 const express = require( 'express' )
 const path = require( 'path' )
 const ejsMate = require('ejs-mate')
+const mongoose = require('mongoose')
 
 
 // express set-up
@@ -12,7 +13,26 @@ app.engine( 'ejs',ejsMate )
 app.set( 'view engine', 'ejs' )
 app.set( 'views', path.join( __dirname, 'views' ) )
 
-// functions
+// mongoose setup
+
+mongoose.connect( 'mongodb://localhost:27017/erebor', { useNewUrlParser: true } )
+		.then( () => {
+				console.log("COnnection to erebor succeded!");
+		})
+		.catch( (err) => {
+				console.log("COnnection to erebor failed..");
+		})
+
+const playerSchema = new mongoose.Schema({
+		username: String,
+		password: String,
+		name: String,
+		teamCode: String,
+		role: String,
+		isReady: Boolean,
+		isOnline: Boolean,
+})
+const Player = mongoose.model('Player',playerSchema)
 
 // routes
 app.get( '/', ( req,res ) => {
@@ -23,38 +43,87 @@ app.get( '/login', ( req,res ) => {
 		res.render( 'login' )
 })
 
-const login = { 'p1': 'pass1', 'p2': 'pass2', 'p3':'pass3' };
-const teams = {}
-count = 1
-
 app.post( '/join', ( req,res ) => {
 		const { username, password, name, code } = req.body;
 
-		if( login[username] == password ){
-
-				if( Object.keys(teams).includes(code) ) {
-						if( teams['asdf'].length >= 6){
-								res.send('max player reached')
-						}
-						else{
-								teams[code].unshift(name)
-						}
+		Player.find({ username, password, name, teamCode: code },null, {lean: true})
+		.then( data => {
+				if ( data.length != 0 ){
+						console.log(data)
+						data = data[0]
+						res.render( 'profile', { data } )
 				}
 				else{
-						teams[code] = [name]
+						res.send("<h1>Invalid Credentials.</h1>").status(404)
 				}
-				res.redirect('/lobby')
-		}
-		else{
-				res.send('invalid username or password')
-		}
+		})
 
+})
+app.get( '/profile/:id', ( req,res ) => {
+		const { id } = req.params;
+
+		Player.updateOne( {_id: id}, {isReady: false})
+		.then( resp => {
+				Player.findById( id,null,{ lean: true } )
+				.then( data => {
+						res.render( 'profile', { data  } )
+				})
+		})
 
 
 })
 
-app.get( '/lobby', ( req,res ) => {
-		res.render( 'lobby', { players: teams['asdf'] })
+app.get( '/:teamCode/ready/:id', ( req,res ) => {
+		const { teamCode, id } = req.params
+		Player.find({ teamCode },null,{lean: true})
+		.then( teamPlayers => {
+				Player.findById( id,null,{ lean: true })
+				.then( mainPlayer => {
+						console.log(mainPlayer)
+						Player.updateOne({username: mainPlayer.username}, {$set: {isReady: true}})
+						.then( resp => {
+								console.log(resp)
+								res.render( 'lobby', { teamPlayers, id, mainPlayer })
+						})
+				})
+		})
+
+})
+
+app.get( '/change/:id', ( req,res ) => {
+		const { id } = req.params;
+		Player.findById(id, null, { lean: true })
+				.then( data => {
+						res.render( 'change', { data } )
+				})
+})
+app.post( '/change/:id', ( req,res ) => {
+		const { name } = req.body;
+		const { id } = req.params;
+
+		Player.updateOne( { _id: id }, { $set: {name: name} })
+		.then(resp => {
+				console.log(resp)
+
+				Player.findById( id,null,{ lean: true } )
+				.then( data => {
+						res.render( 'profile', { data } )
+				})
+		})
+
+
+})
+
+app.get( '/:teamCode/lobby/:id', ( req,res ) => {
+
+		const { teamCode, id } = req.params
+		Player.find({ teamCode },null,{lean: true})
+		.then( teamPlayers => {
+				Player.findById( id,null,{ lean: true })
+				.then( mainPlayer => {
+						res.render( 'lobby', { teamPlayers, id, mainPlayer })
+				})
+		})
 })
 
 app.get( '/hacker', ( req,res ) => {

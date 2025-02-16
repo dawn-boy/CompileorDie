@@ -1,9 +1,30 @@
 <% layout('layout/boilerplate.ejs') %>
 
-<h1>This is the Lobby page </h1>
-<ul>
-<% for( let player of players ){ %>
-<li><%= player %></li>
+<h1>This is the lobby page </h1>
+<h5> (refresh the page to see current status) </h5>
+
+<% if( mainPlayer.isReady ) { %>
+		<h2 ><p style="color: green" ><%= mainPlayer.name %> </p> </h2>
+<% } else { %>
+		<h2><p style="color: red" ><%= mainPlayer.name %> </p> </h2>
 <% } %>
+<h3> Team members: </h3>
+<ul>
+		<% for( let player of teamPlayers){ %>
+				<% if( player._id != id ){ %>
+						<% if( player.isReady ) { %>
+								<h2 ><p style="color: green" ><%= player.name %> </p> </h2>
+						<% } else { %>
+								<h2><p style="color: red" ><%= player.name %> </p> </h2>
+						<% } %>
+				<% } %>
+		<% } %>
 </ul>
 
+<form action='/profile/<%=id%>'>
+		<button>return to profile</button>
+</form>
+
+<form action='/<%=mainPlayer.teamCode%>/ready/<%=id%>'>
+		<button>Ready</button>
+</form>

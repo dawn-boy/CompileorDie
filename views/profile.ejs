@@ -1,0 +1,14 @@
+<% layout('layout/boilerplate.ejs') %>
+
+<h1>This is the Profile page </h1>
+<h1> Your TeamCode: <b><%= data.teamCode%></b>  <h1> 
+
+<h2> Name: <b><%= data.name %></b><h2> 
+
+<form action='/change/<%= data._id %>'>
+		<button> Customize </button>
+</form>
+
+<form action='/<%= data.teamCode %>/lobby/<%= data._id %>'>
+		<button> Join the lobby </button>
+</form>
