@@ -1,10 +1,55 @@
 <% layout('layout/boilerplate.ejs') %>
-
-<h1>This is the login page</h1>
-<form action="/join" method='post'>
-		<input placeholder="Username" type='text' name='username'>
-		<input placeholder="Password" type='password' name='password'>
-		<input placeholder="Player's name" type='text' name='name'>
-		<input placeholder='Team code' type='text' name='code'>
-		<button>Submit</button>
-</form>
+    <div class="hero is-dark is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title has-text-centered has-text-light">Login Interface</h1> 
+                <div class="columns is-centered">
+                    <div class="column is-4">
+                        <form action="/join" method="post" class="box">
+                            <div class="field">
+                                <label class="label has-text-link">User Name</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" class="input is-medium" placeholder="Enter your username" name="username" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-success">Password</label>
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input is-medium" placeholder="******" name="password" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-warning">Alias Name</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" class="input is-medium" placeholder="Batman" name="name" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-user-secret"></i> <!-- Incognito icon -->
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label has-text-danger">Team Code</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" class="input is-medium" placeholder="DY4HK5" name="code" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-code"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-info is-medium is-fullwidth">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
