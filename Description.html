@@ -55,12 +55,16 @@
                 padding: 10px;
                 margin-top: 20px;
             }
-/*
+
             #heading{
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-                background-color: #16161d;
+                font-family: 'Poppins', sans-serif;
+                font-size: 3.5rem; 
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                text-shadow: 2px 2px 20px rgba(255, 255, 0, 0.7);
             }
-*/
+
             #desc{
                 background-color: #2b2b40;
                 color: #2b2b40;
@@ -69,18 +73,33 @@
                 overflow-x: auto;
                 margin-bottom: 20px;
             }
+            #gameplay{
+                text-shadow: 2px 2px 10px rgba(255, 255, 0, 0.7);
+            }
+            #COD{
+                text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            }
+            #login{
+                text-shadow: 2px 2px 10px rgba(0, 255, 0, 0.7);
+            }
+            #hacker{
+                text-shadow: 2px 2px 10px rgb(217, 10, 10);
+            }
+            #roles{
+                text-shadow: 2px 2px 10px rgba(0, 255, 0, 0.7);
+            }
         </style>
     </head>
     <body>
         <nav class="navbar is-primary has-background-danger">
             <div class="navbar-brand">
-                <a class="navbar-item has-background-danger">
+                <a id="COD" class="navbar-item has-background-danger">
                     Compile or Die☠️
                 </a>
             </div>
             <div class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item" href="#">
+                    <a id="login" class="navbar-item" href="login.html">
                         Login
                     </a>
                 </div> 
@@ -92,7 +111,7 @@
         </div>
         
         <div class="container login-box ">
-            <h1 class="subtitle has-text-weight-bold is-size-3">
+            <h1 id="gameplay" class="subtitle has-text-weight-bold is-size-3">
                 GamePlay:
             </h1>
             <h3 class="subtitle has-text-weight-bold is-size-5">
@@ -125,9 +144,43 @@ The Developers must identify and eliminate the Hackers before the system crashes
             <div id="desc" class="is-size-5 has-background-dark has-text-white">
                 At the start of the game, players are randomly assigned roles. The game progresses through a continuous cycle of:<br><strong class="has-text-white"> three key phases</strong><br><hr>
                 <strong class="has-text-success">1. Development Phase</strong> – All players actively write and submit code.<br><br>
-                <strong class="has-text-danger">2. Sabotage Phase</strong> – The Hacker attempts to manipulate the code under the guise of debugging, the <strong class="has-text-success"><i>Debugger</i></strong>  works to decode and fix potential issues, and the <strong class="has-text-warning"><i>Cyber-Guardian</i></strong> monitors for suspicious activity.<br><br>
+                <strong class="has-text-danger">2. Sabotage Phase</strong> – The <strong class="has-text-danger"><i>Hacker</i></strong> attempts to manipulate the code under the guise of debugging, the <strong class="has-text-success"><i>Debugger</i></strong>  works to decode and fix potential issues, and the <strong class="has-text-warning"><i>Cyber-Guardian</i></strong> monitors for suspicious activity.<br><br>
                 <strong class="has-text-warning">3. Iteration Phase</strong> – The process repeats, with players adapting their strategies based on previous actions and discoveries. This structured cycle challenges players to balance efficiency, vigilance, and deception as they navigate an environment of continuous coding and hidden sabotage.
                 <hr>
+            </div>
+            <h3 class="subtitle has-text-weight-bold is-size-5">
+                🎭 Roles
+            </h3>
+            <div id="desc" class="is-size-5 has-background-dark has-text-white">
+                <strong id="roles" class="has-text-weight-bold has-text-success">Developer </strong>👨‍💻 - Fixes code and eliminates Hackers before they take over.<br>
+                <strong id="hacker" class="has-text-weight-bold has-text-danger">Hacker 🕵️‍♂️</strong> - Sabotages the system by bugging the code. Wins if the Developers fail to find them.<br>
+                <strong id="roles" class="has-text-weight-bold has-text-success">Debugger </strong>🛠 - Can repair corrupted code once per round.<br>
+                <strong id="roles" class="has-text-weight-bold has-text-warning">Cyber Guardian </strong>🚨 - Investigates one player per round to detect Hackers.<br> 
+            </div>
+            <h3 class="subtitle has-text-weight-bold is-size-5">
+                🔄 Game Phases
+            </h3>
+            <div id="desc" class="is-size-5 has-background-dark has-text-white">
+                <hr>
+                1️⃣ <strong class="has-text-white">Coding & Sabotage</strong><br>
+                - All Players answer a coding question.<br>
+                - The <strong class="has-text-danger">Hacker</strong> selects a target to debug.
+                <hr>
+                2️⃣ <strong class="has-text-white">Actions & Investigations</strong><br>
+                - <strong class="has-text-weight-bold has-text-success">Debugger </strong>🛠 attempts to fix corrupted code.<br>
+                - <strong class="has-text-weight-bold has-text-warning">Cyber Guardian 🚨</strong> investigates one player.<br>
+                - <strong class="has-text-weight-bold has-text-success">Developer 👨‍💻</strong> continue their coding tasks.<br>
+                <hr>
+                3️⃣ <strong class="has-text-white">Discussion & Voting</strong><br>
+                - Players discuss their suspicions.<br>
+                - Everyone votes to eliminate a player.<br>
+                - If a <strong class="has-text-weight-bold has-text-danger">Hacker</strong> is voted out, the <strong class="has-text-weight-bold has-text-success">Developers</strong> win. If not, the cycle continues.<br>
+                <hr>
+            </div>
+                <h3 id="desc" class="subtitle has-text-weight-bold is-size-4 has-text-centered has-background-dark has-text-danger">
+                    All the best passionate coders, identify and eliminate the Hackers before the system crashes<br>
+                    ! ! ! ! !
+                </h3>
             </div>
         </div>
     </body>
