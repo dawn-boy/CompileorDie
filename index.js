@@ -46,16 +46,19 @@ app.get( '/login', ( req,res ) => {
 app.post( '/join', ( req,res ) => {
 		const { username, password, name, code } = req.body;
 
-		Player.find({ username, password, name, teamCode: code },null, {lean: true})
-		.then( data => {
-				if ( data.length != 0 ){
+		Player.updateOne({ username, password }, { name: name })
+		.then( resp => {
+				Player.find({ username, password, name, teamCode: code },null, {lean: true})
+				.then( data => {
 						console.log(data)
-						data = data[0]
-						res.render( 'profile', { data } )
-				}
-				else{
-						res.send("<h1>Invalid Credentials.</h1>").status(404)
-				}
+						if ( data.length != 0 ){
+								data = data[0]
+								res.render( 'profile', { data } )
+						}
+						else{
+								res.send("<h1>Invalid Credentials.</h1>").status(404)
+						}
+				})
 		})
 
 })
