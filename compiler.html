@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <title>GPT</title>
+    <style>
+        .iframe-container {
+            width:50vw;
+            height:50vh;
+            top:10px;
+            left:10px;
+            overflow-y: hidden;
+            position: relative;
+            /* background-color: none; */
+            border: 1px solid #9da3a9;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 115%; /* Make it taller so we can shift it */
+            position: absolute;
+            top: -51px; /* Adjust this to hide the navbar */
+            left: 0px;
+            border: none;
+        }
+        .question {
+            width:50vw;
+            height:215px;
+            margin-left: 10px;
+            background-color: rgb(28, 33, 48);
+            border: 1px solid #9da3a9;
+        }
+        .question h1{
+            padding-top: 20px;
+        }
+        .syntax{
+            background-color: rgb(28, 33, 48);
+            border: 1px solid #9da3a9;
+            width: 350px;
+            height: 80vh;
+            text-align: center;
+        }
+        .syntax h1{
+            padding-top: 20px;
+        }
+        .wrap{
+            display: flex;
+            margin-top: 20px;
+            background-color:none;
+        }
+        .choice{
+            background-color: rgb(28, 33, 48);
+            border: 1px solid #9da3a9;
+            margin-left: 10px;
+            width: 370px;
+        }
+        .choice h1{
+            padding-top: 20px;
+        }
+        .welcome{
+            background-color: rgb(28, 33, 48);
+            border: none;
+            text-align: center;
+            margin: 0px 550px;
+            border-radius: 30px;
+
+        }
+        .welcome h1{
+            padding: 20px;
+        }
+        .upside{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar is-muted">
+        <div class="navbar-brand">
+            <!-- Logo or Brand Name -->
+            <a class="navbar-item" href="#">
+                <strong class="is-size-6 has-text-success has-text-weight-bold">Compile Or Die</strong>
+            </a>
+        </div>
+
+       <!-- <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#">Home</a>
+                <a class="navbar-item" href="#">About</a>
+                <a class="navbar-item" href="#">Services</a>
+                <a class="navbar-item" href="#">Contact</a>
+            </div>
+        </div> -->
+    </nav>
+    <div class="upside">
+        <div class="welcome">
+            <h1 class="title has-text-danger">Hello Player</h1>
+        </div>
+        <button class="button is-primary px-4">SUBMIT</button>
+    </div>
+    <div class="wrap">
+        <div class="syntax">
+            <h1 class="title has-text-info">Syntax</h1>
+            <p class="has-text-justified px-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus consequatur labore impedit architecto id ut eligendi quo minima quia, ad laboriosam autem, dolor adipisci. Unde, doloremque repellendus? Voluptate omnis eum itaque maiores officiis eveniet, quasi tenetur fugit vitae culpa autem sed fugiat doloremque ipsam. Vero officiis iure, consequatur praesentium eligendi velit facilis dolorem ea recusandae in, quas veritatis quaerat doloribus repudiandae, illo esse ipsa alias corrupti adipisci est aperiam? Voluptas fugiat, provident, quam vitae eaque consectetur, reiciendis sint doloremque animi architecto nihil commodi modi et libero ex doloribus corporis veniam non incidunt id numquam rem? At eos odit sunt velit?</p>
+        </div>
+        <div class="wrap-iframe">
+            <div class="question">
+                <H1 class="title has-text-centered has-text-warning">Question</H1>
+                <p class="has-text-justified px-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex consectetur minima ducimus repellat expedita, nobis sed reprehenderit voluptates obcaecati dolores!</p>
+            </div>
+            <div class="iframe-container">
+                <iframe src="https://www.programiz.com/python-programming/online-compiler/"></iframe>
+            </div>
+        </div>
+        <div class="choice">
+            <h1 class="title has-text-centered has-text-danger">Choice</h1>
+            <p class="has-text-justified px-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut possimus voluptas odio deleniti aliquam praesentium impedit veritatis optio reprehenderit reiciendis rem assumenda et doloribus expedita rerum obcaecati tempora magni accusamus aspernatur dolores quam, voluptate dolorum. Laborum est quas, nesciunt labore esse hic optio magni suscipit explicabo voluptates? Placeat repudiandae ratione repellendus natus eveniet pariatur esse nemo nisi ab quia libero obcaecati, beatae illo dolorum. Quis neque provident natus aliquid vitae. Earum ipsum quae optio, dicta omnis esse dignissimos sint dolor maxime, nihil reprehenderit autem asperiores voluptatum molestiae a, porro officia velit ipsa distinctio. Quibusdam excepturi aperiam laudantium deserunt magni! A!</p>
+        </div>
+    </div>
+</body>
+</html>
