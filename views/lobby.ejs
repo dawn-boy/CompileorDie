@@ -1,30 +1,72 @@
 <% layout('layout/boilerplate.ejs') %>
 
 <h1>This is the lobby page </h1>
-<h5> (refresh the page to see current status) </h5>
 
-<% if( mainPlayer.isReady ) { %>
-		<h2 ><p style="color: green" ><%= mainPlayer.name %> </p> </h2>
+<% if(mainPlayer.isReady) { %>
+		<h2 style='color: green;' id='<%=mainPlayer._id%>-ready' >Me: <%= mainPlayer.name %> </h2>
 <% } else { %>
-		<h2><p style="color: red" ><%= mainPlayer.name %> </p> </h2>
+		<h2 style='color: red;' id='<%=mainPlayer._id%>-ready' >Me: <%= mainPlayer.name %> </h2>
 <% } %>
-<h3> Team members: </h3>
-<ul>
-		<% for( let player of teamPlayers){ %>
-				<% if( player._id != id ){ %>
-						<% if( player.isReady ) { %>
-								<h2 ><p style="color: green" ><%= player.name %> </p> </h2>
-						<% } else { %>
-								<h2><p style="color: red" ><%= player.name %> </p> </h2>
-						<% } %>
-				<% } %>
+
+
+<h2>Team: </h2>
+<ul id='team-players'>
+	<% for(let player of teamPlayers){ %>	
+	  <% if(player.name != mainPlayer.name){ %>
+		<% if(player.isReady){ %>
+					<li style='color: green;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <%= player.isOnline %></li>
+		<% } else { %>
+					<li style='color: red;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <%= player.isOnline %></li>
 		<% } %>
+
+	<% }} %>
 </ul>
 
-<form action='/profile/<%=id%>'>
-		<button>return to profile</button>
-</form>
+<button id='profile-btn'>return to profile</button>
+<button id='ready-btn'>Ready</button>
 
-<form action='/<%=mainPlayer.teamCode%>/ready/<%=id%>'>
-		<button>Ready</button>
-</form>
+<script> Pusher.logToConsole = true;
+
+
+
+document.querySelector('#profile-btn').addEventListener('click', e => {
+		fetch('http://localhost:8000/not-ready',{
+				method: 'Post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({ready: false})
+		})
+})
+
+document.querySelector('#ready-btn').addEventListener('click', e => {
+		
+		console.log("Click reg")
+
+		fetch('http://localhost:8000/ready',{
+				method: 'Post',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({ready: true})
+		})
+
+
+})
+
+const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
+const channel = pusher.subscribe('ready-channel')
+channel.bind('ready-event', data => {
+		console.log(data)
+		if(data.ready){
+				document.getElementById(`${data.id}-ready`).style = 'color: green;'
+				if(data.id != "<%= mainPlayer._id %>"){
+						document.getElementById(`${data.id}-ready-txt`).textContent = 'true'
+				}
+		}else{
+				document.getElementById(`${data.id}-ready`).style = 'color: red;'
+				if(data.id != "<%= mainPlayer._id %>"){
+						document.getElementById(`${data.id}-ready-txt`).textContent = 'false'
+				}
+		}
+})
+
+
+
+</script>

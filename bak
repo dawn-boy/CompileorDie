@@ -6,8 +6,6 @@ const ejsMate = require('ejs-mate')
 const mongoose = require('mongoose')
 const Pusher = require('pusher')
 const cors = require('cors')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
 
 
 // express set-up
@@ -16,12 +14,6 @@ app.use( express.static( path.join( __dirname, 'public' ) ) )
 app.use(express.json())
 app.use(express.urlencoded( { extends: true } ))
 app.use(cors())
-app.use(cookieParser())
-app.use(session({
-		resave: true,
-		saveUnintialized: true,
-		secret: "secret"
-}))
 app.engine( 'ejs',ejsMate )
 app.set( 'view engine', 'ejs' )
 app.set( 'views', path.join( __dirname, 'views' ) )
@@ -46,7 +38,7 @@ const playerSchema = new mongoose.Schema({
 })
 const Player = mongoose.model('Player',playerSchema)
 
-// pusher setup
+// pusher setupt
 const pusher = new Pusher({
   appId: process.env.APP_ID,
   key: process.env.KEY,

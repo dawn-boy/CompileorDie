@@ -1,0 +1,30 @@
+<% layout('layout/boilerplate.ejs') %>
+
+<h1>Ready Status</h1>
+<p><b id='ready-elem'>Ready</b></p>
+<button onclick='status(true)'>Ready</button>
+<button onclick='status(false)'>not so Ready</button>
+
+<script>
+
+		function status(option){
+				fetch('http://localhost:8000/ready', {
+						method: 'POST',
+						headers: {'Content-Type': 'application/json'},
+						body: JSON.stringify({ready: option})
+				})
+
+				const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
+				const channel = pusher.subscribe('ready-channel')
+				channel.bind('ready-event', data => {
+						if(data.ready){
+								document.getElementById('ready-elem').style = 'color: green;'
+						}
+						else{
+								document.getElementById('ready-elem').style = 'color: red;'
+						}
+						console.log(data.ready)
+				})
+		}
+		
+</script>
