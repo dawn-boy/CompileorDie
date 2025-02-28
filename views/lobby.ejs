@@ -14,9 +14,9 @@
 	<% for(let player of teamPlayers){ %>	
 	  <% if(player.name != mainPlayer.name){ %>
 		<% if(player.isReady){ %>
-					<li style='color: green;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <%= player.isOnline %></li>
+					<li style='color: green;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <span id='<%= player._id %>-online-txt'><%= player.isOnline %></span></li>
 		<% } else { %>
-					<li style='color: red;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <%= player.isOnline %></li>
+					<li style='color: red;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <span id='<%= player._id %>-online-txt'><%= player.isOnline %></span></li>
 		<% } %>
 
 	<% }} %>
@@ -51,8 +51,8 @@ document.querySelector('#ready-btn').addEventListener('click', e => {
 })
 
 const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
-const channel = pusher.subscribe('ready-channel')
-channel.bind('ready-event', data => {
+const lobbyChannel = pusher.subscribe('lobby-channel')
+lobbyChannel.bind('ready-event', data => {
 		console.log(data)
 		if(data.ready){
 				document.getElementById(`${data.id}-ready`).style = 'color: green;'
@@ -67,6 +67,18 @@ channel.bind('ready-event', data => {
 		}
 })
 
+lobbyChannel.bind('online-event', data => {
+		if(data.online){
+				if(data.id != "<%= mainPlayer._id %>"){
+						console.log("login data")
+						document.getElementById(`${data.id}-online-txt`).textContent = 'true'
+				}}
+		else{
+				if(data.id != "<%= mainPlayer._id %>"){
+						console.log('logout data')
+						document.getElementById(`${data.id}-online-txt`).textContent = 'false'
 
+		}
+}})
 
 </script>

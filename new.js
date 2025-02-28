@@ -68,7 +68,8 @@ app.get( '/login', (req,res) => {
 app.get( '/logout', (req,res) => {
 		user = req.session.user
 		Player.updateOne({username: user.username, password: user.password}, {$set: {isOnline: false}})
-		.then( resp => {
+		.then( async resp => {
+				await pusher.trigger('lobby-channel','online-event', {id: user._id, online: false})
 				req.session.destroy();
 				res.send('Successfully Logged out')
 		})
@@ -80,11 +81,12 @@ app.post( '/join', (req,res) => {
 		Player.updateOne({username, password}, {$set: {name: name, isOnline: true}})
 		.then( resp => {
 				Player.find({ username, password, name, teamCode: code }, null, { lean: true})
-				.then( data => {
+				.then( async data => {
 						if(data.length != 0){
 								req.session.user = data[0]
 								req.session.save()
 								data = req.session.user
+								await pusher.trigger('lobby-channel','online-event', {id: data._id, online: true})
 								res.render( 'profile', { user: data })
 						}
 						else{
@@ -136,7 +138,7 @@ app.post( '/ready', (req,res) => {
 		Player.updateOne({_id: user._id}, {$set: {isReady: true}})
 		.then( async resp => {
 				console.log(resp)
-				await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: true })
+				await pusher.trigger('lobby-channel', 'ready-event', { id: user._id, ready: true })
 		})
 })
 
@@ -146,7 +148,7 @@ app.post( '/not-ready', (req,res) => {
 		user = req.session.user
 		Player.updateOne({_id: user._id}, {$set: {isReady: false}})
 		.then( async resp => {
-				await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+				await pusher.trigger('lobby-channel', 'ready-event', { id: user._id, ready: false })
 		})
 
 })
