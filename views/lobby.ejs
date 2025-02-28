@@ -8,11 +8,7 @@
 		<h2 style='color: red;' id='<%=mainPlayer._id%>-ready' >Me: <%= mainPlayer.name %> </h2>
 <% } %>
 
-
-<h2>Team: </h2>
-<ul id='team-players'>
-	<% for(let player of teamPlayers){ %>	
-	  <% if(player.name != mainPlayer.name){ %>
+<h2>Team: </h2> <ul id='team-players'> <% for(let player of teamPlayers){ %>	<% if(player.name != mainPlayer.name){ %>
 		<% if(player.isReady){ %>
 					<li style='color: green;' id='<%= player._id %>-ready' ><%= player.name %> - Ready: <span id='<%= player._id %>-ready-txt' ><%= player.isReady %> </span> Online: <span id='<%= player._id %>-online-txt'><%= player.isOnline %></span></li>
 		<% } else { %>
@@ -25,60 +21,83 @@
 <button id='profile-btn'>return to profile</button>
 <button id='ready-btn'>Ready</button>
 
-<script> Pusher.logToConsole = true;
+<script> 
 
+ip = '192.168.29.15'
+url = `http://${ip}:8000`
 
+if(!Pusher.instances.length){
+		Pusher.logToConsole = true;
+		document.querySelector('#profile-btn').addEventListener('click', async e => {
 
-document.querySelector('#profile-btn').addEventListener('click', e => {
-		fetch('http://localhost:8000/not-ready',{
-				method: 'Post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({ready: false})
+				resp = await fetch(url+'/not-ready',{
+						method: 'Post',
+						headers: {'Content-Type': 'application/json'},
+						body: JSON.stringify({ready: false}),
+				})
+
+				if(!resp.ok) throw new Error('/not-ready route failed')
+
+				window.location.href = '/profile'
+				
 		})
-})
 
-document.querySelector('#ready-btn').addEventListener('click', e => {
-		
-		console.log("Click reg")
+		document.querySelector('#ready-btn').addEventListener('click', async e => {
 
-		fetch('http://localhost:8000/ready',{
-				method: 'Post',
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify({ready: true})
+				resp = await fetch(url+'/ready',{
+						method: 'Post',
+						headers: {'Content-Type': 'application/json'},
+						body: JSON.stringify({ready: true})
+				})
+				if(!resp.ok) throw new Error('/ready route failed')
+
+				resp = await fetch(url+'/ready-check')
+				if(!resp.ok) throw new Error('/ready-check route failed')
+				data = await resp.json()
+
+				if(data.ready){
+					resp = await fetch(url+'/countdown')
+					if(!resp.ok) throw new Error('/countdown route failed')
+				}
+
+
+				
 		})
 
-
-})
-
-const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
-const lobbyChannel = pusher.subscribe('lobby-channel')
-lobbyChannel.bind('ready-event', data => {
-		console.log(data)
-		if(data.ready){
-				document.getElementById(`${data.id}-ready`).style = 'color: green;'
-				if(data.id != "<%= mainPlayer._id %>"){
-						document.getElementById(`${data.id}-ready-txt`).textContent = 'true'
+		const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
+		const readyChannel = pusher.subscribe('ready-channel')
+		readyChannel.bind('ready-event', data => {
+				if(data.ready){
+						document.getElementById(`${data.id}-ready`).style = 'color: green;'
+						if(data.id != "<%= mainPlayer._id %>"){
+								document.getElementById(`${data.id}-ready-txt`).textContent = 'true'
+						}
+				}else{
+						document.getElementById(`${data.id}-ready`).style = 'color: red;'
+						if(data.id != "<%= mainPlayer._id %>"){
+								document.getElementById(`${data.id}-ready-txt`).textContent = 'false'
+						}
 				}
-		}else{
-				document.getElementById(`${data.id}-ready`).style = 'color: red;'
-				if(data.id != "<%= mainPlayer._id %>"){
-						document.getElementById(`${data.id}-ready-txt`).textContent = 'false'
+		})
+
+		const onlineChannel = pusher.subscribe('online-channel')
+		onlineChannel.bind('online-event', data => {
+				if(data.online){
+						if(data.id != "<%= mainPlayer._id %>"){
+								console.log("login data")
+								document.getElementById(`${data.id}-online-txt`).textContent = 'true'
+						}}
+				else{
+						if(data.id != "<%= mainPlayer._id %>"){
+								console.log('logout data')
+								document.getElementById(`${data.id}-online-txt`).textContent = 'false'
+
 				}
-		}
-})
+		}})
 
-lobbyChannel.bind('online-event', data => {
-		if(data.online){
-				if(data.id != "<%= mainPlayer._id %>"){
-						console.log("login data")
-						document.getElementById(`${data.id}-online-txt`).textContent = 'true'
-				}}
-		else{
-				if(data.id != "<%= mainPlayer._id %>"){
-						console.log('logout data')
-						document.getElementById(`${data.id}-online-txt`).textContent = 'false'
-
-		}
-}})
-
+		const countdownChannel = pusher.subscribe('countdown-channel')
+		countdownChannel.bind('countdown-event', data => {
+				window.location.href = '/countdown'
+		})
+}
 </script>

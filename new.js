@@ -69,7 +69,8 @@ app.get( '/logout', (req,res) => {
 		user = req.session.user
 		Player.updateOne({username: user.username, password: user.password}, {$set: {isOnline: false}})
 		.then( async resp => {
-				await pusher.trigger('lobby-channel','online-event', {id: user._id, online: false})
+				await pusher.trigger('online-channel','online-event', {id: user._id, online: false})
+				await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
 				req.session.destroy();
 				res.send('Successfully Logged out')
 		})
@@ -86,7 +87,7 @@ app.post( '/join', (req,res) => {
 								req.session.user = data[0]
 								req.session.save()
 								data = req.session.user
-								await pusher.trigger('lobby-channel','online-event', {id: data._id, online: true})
+								await pusher.trigger('online-channel','online-event', {id: data._id, online: true})
 								res.render( 'profile', { user: data })
 						}
 						else{
@@ -136,9 +137,9 @@ app.post( '/ready', (req,res) => {
 		req.session.save()
 		user = req.session.user
 		Player.updateOne({_id: user._id}, {$set: {isReady: true}})
-		.then( async resp => {
-				console.log(resp)
-				await pusher.trigger('lobby-channel', 'ready-event', { id: user._id, ready: true })
+		.then( resp => {
+				pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: true })
+				res.json({'success':true})
 		})
 })
 
@@ -147,11 +148,41 @@ app.post( '/not-ready', (req,res) => {
 		req.session.save()
 		user = req.session.user
 		Player.updateOne({_id: user._id}, {$set: {isReady: false}})
-		.then( async resp => {
-				await pusher.trigger('lobby-channel', 'ready-event', { id: user._id, ready: false })
+		.then( resp => {
+				pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+				res.json({'success':true})
 		})
 
 })
+app.get( '/ready-check', (req,res) => {
+		user = req.session.user
+		Player.find({teamCode: user.teamCode})
+		.then( data => {
+				for( let player of data ){
+					if(!player.isOnline || !player.isReady){
+							return res.json({ready: false})
+					}
+				}
+				pusher.trigger('countdown-channel', 'countdown-event', {success: true})
+				return res.json({ready:true})
+		})
+})
+
+app.get( '/countdown', (req,res) => {
+		res.render('countdown')
+})
+
+app.post('/game', (req,res) => {
+		pusher.trigger('game-channel','game-event', {success: true})
+})
+
+app.get( '/game', (req,res) => {
+		user = req.session.user
+		role = user.role	
+		res.render(role)
+})
+
+
 
 app.listen(8000, () => {
 		console.log("Connected")

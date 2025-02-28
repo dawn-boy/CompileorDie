@@ -1,0 +1,31 @@
+<% layout('layout/boilerplate.ejs') %>
+
+<h1 style='font-size: 30px;'> The match will start in <span id='ctd'></span>...</h1>
+
+
+<script>
+
+		ip = '192.168.29.15'
+		url = `http://${ip}:8000`
+
+		i = 5	
+		loop = setInterval(() => {
+				document.getElementById('ctd').textContent = i;
+				if( i > 0 ){
+						i--;
+				}
+				else{
+				    clearInterval(loop)	
+					fetch(url+'/game', {
+						method: 'POST'
+					})
+				}
+		},1000)
+
+		const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})
+		const gameChannel = pusher.subscribe('game-channel')
+		gameChannel.bind('game-event', data => {
+			window.location.href = '/game'
+		})
+
+</script>
