@@ -23,7 +23,8 @@
 
 <script> 
 
-ip = '192.168.29.15'
+ip = '192.168.29.233'
+ip = 'localhost'
 url = `http://${ip}:8000`
 
 if(!Pusher.instances.length){
@@ -37,7 +38,6 @@ if(!Pusher.instances.length){
 				})
 
 				if(!resp.ok) throw new Error('/not-ready route failed')
-
 				window.location.href = '/profile'
 				
 		})
@@ -59,9 +59,6 @@ if(!Pusher.instances.length){
 					resp = await fetch(url+'/countdown')
 					if(!resp.ok) throw new Error('/countdown route failed')
 				}
-
-
-				
 		})
 
 		const pusher = new Pusher('776bdf06916235eca13c', {cluster: 'ap2'})

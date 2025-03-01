@@ -9,12 +9,20 @@ const cors = require('cors')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+
+
 // express Setup
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors())
+const corsOptions = {
+    origin: "*", 
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
 app.use(cookieParser())
 app.use(session({
 		resave: true,
@@ -69,8 +77,18 @@ app.get( '/logout', (req,res) => {
 		user = req.session.user
 		Player.updateOne({username: user.username, password: user.password}, {$set: {isOnline: false}})
 		.then( async resp => {
-				await pusher.trigger('online-channel','online-event', {id: user._id, online: false})
-				await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+				try{
+						await pusher.trigger('online-channel','online-event', {id: user._id, online: false})
+				} catch (err){
+						console.log(err)
+						console.log('error on online-channel')
+				}
+				try{
+						await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+				} catch (err){
+						console.log(err)
+						console.log('error on ready-channel')
+				}
 				req.session.destroy();
 				res.send('Successfully Logged out')
 		})
@@ -87,7 +105,12 @@ app.post( '/join', (req,res) => {
 								req.session.user = data[0]
 								req.session.save()
 								data = req.session.user
-								await pusher.trigger('online-channel','online-event', {id: data._id, online: true})
+								try{
+										await pusher.trigger('online-channel','online-event', {id: data._id, online: true})
+								} catch (err){
+										console.log('error on online-channle2')
+										console.log(err)
+								}
 								res.render( 'profile', { user: data })
 						}
 						else{
@@ -137,8 +160,13 @@ app.post( '/ready', (req,res) => {
 		req.session.save()
 		user = req.session.user
 		Player.updateOne({_id: user._id}, {$set: {isReady: true}})
-		.then( resp => {
-				pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: true })
+		.then( async resp => {
+				try{
+						await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: true })
+				} catch(err){
+						console.log(err)
+						console.log('error on ready channel 2')
+				}
 				res.json({'success':true})
 		})
 })
@@ -148,8 +176,13 @@ app.post( '/not-ready', (req,res) => {
 		req.session.save()
 		user = req.session.user
 		Player.updateOne({_id: user._id}, {$set: {isReady: false}})
-		.then( resp => {
-				pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+		.then( async resp => {
+				try{
+						await pusher.trigger('ready-channel', 'ready-event', { id: user._id, ready: false })
+				} catch(err){
+						console.log(err)
+						console.log('error on ready-channel3')
+				}
 				res.json({'success':true})
 		})
 
@@ -157,13 +190,18 @@ app.post( '/not-ready', (req,res) => {
 app.get( '/ready-check', (req,res) => {
 		user = req.session.user
 		Player.find({teamCode: user.teamCode})
-		.then( data => {
+		.then( async data => {
 				for( let player of data ){
 					if(!player.isOnline || !player.isReady){
 							return res.json({ready: false})
 					}
 				}
-				pusher.trigger('countdown-channel', 'countdown-event', {success: true})
+				try{
+						await pusher.trigger('countdown-channel', 'countdown-event', {success: true})
+				} catch(err){
+						console.log(err)
+						console.log('error on countdown-channel')
+				}
 				return res.json({ready:true})
 		})
 })
@@ -172,8 +210,13 @@ app.get( '/countdown', (req,res) => {
 		res.render('countdown')
 })
 
-app.post('/game', (req,res) => {
-		pusher.trigger('game-channel','game-event', {success: true})
+app.post('/game', async (req,res) => {
+		try{
+				await pusher.trigger('game-channel','game-event', {success: true})
+		} catch(err){
+				console.log(err)
+				console.log('error on game channel')
+		}
 })
 
 app.get( '/game', (req,res) => {
