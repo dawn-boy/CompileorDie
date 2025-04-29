@@ -1,4 +1,4 @@
-# 🕵️‍♂️ Erebor: A Social Deduction Game for Developers
+# 🕵️‍♂️ CompileorDie: A Social Deduction Game for Developers
 
 Are you a **Developer**, fixing broken code and hunting for Hackers? Or are you a **Hacker**, secretly sabotaging the system? Play smart, deceive wisely, and survive until the end!
 
@@ -13,7 +13,7 @@ Are you a **Developer**, fixing broken code and hunting for Hackers? Or are you 
 - [Contributing](#contributing)
 
 ## 🎮 About the Game
-Erebor is a **web-based social deduction game** where players take on the roles of Developers or Hackers. The Developers must identify and eliminate the Hackers before the system crashes. With special roles like **Debugger** and **Cyber Guardian**, each game is a strategic battle of deception and deduction!
+CompileorDie is a **web-based social deduction game** where players take on the roles of Developers or Hackers. The Developers must identify and eliminate the Hackers before the system crashes. With special roles like **Debugger** and **Cyber Guardian**, each game is a strategic battle of deception and deduction!
 
 ## 🕹 How to Play
 1. Players are randomly assigned roles at the start of the game.
@@ -59,8 +59,8 @@ Erebor is a **web-based social deduction game** where players take on the roles 
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/your-username/erebor.git  
-   cd erebor  
+   git clone https://github.com/your-username/CompileorDie.git  
+   cd CompileorDie  
    ```  
 2. **Install dependencies**
    ```sh
@@ -89,7 +89,7 @@ Erebor is a **web-based social deduction game** where players take on the roles 
 | `/endgame`  | Game results & winner announcement |  
 
 ## 🤝 Contributing
-Want to improve Erebor? Contributions are welcome! Simply fork the repo, create a branch, and submit a PR.
+Want to improve CompileorDie? Contributions are welcome! Simply fork the repo, create a branch, and submit a PR.
 
 ## 🎮 Ready to Play?
 Join the battle between **Hackers and Developers** now! Clone the repo and start coding! 💻🔥
