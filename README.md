@@ -75,6 +75,29 @@ CompileorDie is a **web-based social deduction game** where players take on the 
    http://localhost:8000  
    ```
 
+## Flow logic of *Legacy* V1
+
+This is the logic of our Telegram bot that we created for the MindKraft25 event. It hosted 75+ participants and now it rests here in peace. *It is soon to be succeded by his big brother!*
+
+### Round 0 - Entrypoint
+![round-0](https://github.com/user-attachments/assets/6a44fd2d-d5db-4330-800a-1474c1f0c29b)
+
+### Round 1 
+![round-1](https://github.com/user-attachments/assets/636509cc-f34f-4d4a-8a93-073acc19248a)
+
+### Round 2 
+![round-2](https://github.com/user-attachments/assets/7661c249-1480-4d63-8406-484d109f437b)
+
+### Round 3 
+![round-3](https://github.com/user-attachments/assets/dd28a9cf-dc6a-4b9d-a443-cd398c1e7806)
+
+### Round 4 
+![round-4](https://github.com/user-attachments/assets/2464c368-84fe-447b-bfbe-c9adb146625e)
+
+### Round 5 
+![round-5](https://github.com/user-attachments/assets/e30aa2bb-10fc-407a-8364-65ae4ce9c4d9)
+
+
 ## 🌐 API & Routes
 
 | Route        | Purpose |  
