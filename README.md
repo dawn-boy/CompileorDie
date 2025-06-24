@@ -21,71 +21,63 @@ Players are secretly assigned roles as either Hackers or Developers. The Hackers
    - there's only two players including the hacker
    - the hacker's found and killed ruthelessly
 
+## Roles
 
+| Role           | Abilities & Goals |  
+|---------------|------------------|  
+| **Hacker**   | Sabotages the system by corrupting code. Wins if the Developers fail to find them. |  
+| **Developer**  | Fixes code and eliminates Hackers before they take over. |  
+| **Debugger**  | Can repair corrupted code once per round. |  
+| **Cyber Guardian** | Investigates one player per round to detect Hackers. |  
 
-## Routes
-- / ![req](https://img.shields.io/badge/get-blue)
-- /login ![req](https://img.shields.io/badge/get-blue) ![req](https://img.shields.io/badge/post-red)
-- /question ![req](https://img.shields.io/badge/post-red)
-- /lobby ![req](https://img.shields.io/badge/get-blue)
-- /hacker ![req](https://img.shields.io/badge/get-blue)
-- /debugger ![req](https://img.shields.io/badge/get-blue)
-- /cyberGuardian ![req](https://img.shields.io/badge/get-blue)
-- /developer ![req](https://img.shields.io/badge/get-blue)
-- /endgame ![req](https://img.shields.io/badge/get-blue)
+## Tech Stack
+- **Frontend**: HTML, CSS, JavaScript, EJS
+- **Backend**: Node.js, Express.js, MongoDB
 
+## Installation & Setup
 
-## Tech-stack
-### Front-end
-1. HTML
-2. CSS
-3. Javascript
-4. EJS
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/your-username/CompileorDie.git  
+   cd CompileorDie  
+   ```  
+2. **Install dependencies**
+   ```sh
+   npm install  
+   ```  
+3. **Start the server**
+   ```sh
+   nodemon  
+   ```  
+4. **Open the game in your browser**
+   ```
+   http://localhost:8000  
+   ```
 
-### Back-end
-1. Node.js
-2. MongoDB
-   
-## Pages
+## Flow logic of *Legacy* V1
 
-0. Home
-   - Game Desc
-   - Login redirect
+This is the logic of our Telegram bot that we created for the MindKraft25 event. It hosted 75+ participants and now it rests here in peace. *It is soon to be succeded by his big brother!*
 
-2. Login
-   - username field
-   - pass field
-   - enter player's name
-   - join a team
-   - submit button
+### Round 0 - Entrypoint
+![round-0](https://github.com/user-attachments/assets/6a44fd2d-d5db-4330-800a-1474c1f0c29b)
 
-4. Lobby
-   - ready status of team players
-   - ready button
-   - randomly assigns the roles when the game begins
+### Round 1 
+![round-1](https://github.com/user-attachments/assets/636509cc-f34f-4d4a-8a93-073acc19248a)
 
-6. Hacker
-   - [if its phase 1] gets to choose whom to bug
-   - [if its phase 2] gets the chosen one's code to bug
-   - gets a question just like other players
-   - code execution and submission 
+### Round 2 
+![round-2](https://github.com/user-attachments/assets/7661c249-1480-4d63-8406-484d109f437b)
 
-8. Debugger
-   - [if its phase 2] gets to choose whom to debug
-   - [if its phase 3] gets the chosen one's code to debug
-   - gets a question just like other players
-   - code execution and submission 
+### Round 3 
+![round-3](https://github.com/user-attachments/assets/dd28a9cf-dc6a-4b9d-a443-cd398c1e7806)
 
-10. Cyber guardian
-    - has the power to check if their sus is true (once per cycle)
-    - gets a question just like other players
-    - code execution and submission 
+### Round 4 
+![round-4](https://github.com/user-attachments/assets/2464c368-84fe-447b-bfbe-c9adb146625e)
 
-12. Developers
-    - gets a question just like other players
-    - code execution and submission
-    - can't even control their own fate..
+### Round 5 
+![round-5](https://github.com/user-attachments/assets/e30aa2bb-10fc-407a-8364-65ae4ce9c4d9)
 
-14. Endgame
-    - The results
-    - showcasing the role of each player and their activity throughout the game
+## Contributions
+Want to improve CompileorDie? Contributions are welcome! Simply fork the repo, create a branch, and submit a PR.
+
+## Ready to Play?
+Clone the repo right now and start playing! or just wait for us to make it online!
