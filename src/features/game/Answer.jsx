@@ -1,9 +1,9 @@
-import {Outlet} from "react-router-dom";
-
-const Answer = () => {
+const Answer = ({ handleNext }) => {
   return (
     <div>
-        <Outlet />
+      <textarea rows={30} cols={130} />
+      <br />
+      <button onClick={handleNext}>Next</button>
     </div>
   );
 };

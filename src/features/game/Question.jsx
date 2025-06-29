@@ -1,7 +1,10 @@
-const Question = () => {
+const Question = ({ questionIndex, question, description }) => {
   return (
     <div>
-      This is the Question page.
+      <h1>
+        {questionIndex}. {question}
+      </h1>
+      <h3>{description}</h3>
     </div>
   );
 };

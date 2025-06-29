@@ -1,9 +1,5 @@
 const PlayerChoice = () => {
-  return (
-    <div>
-      This is the PlayerChoice page.
-    </div>
-  );
-};
+  return <div>This is the PlayerChoice page.</div>
+}
 
-export default PlayerChoice;
+export default PlayerChoice

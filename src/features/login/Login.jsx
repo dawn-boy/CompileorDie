@@ -1,9 +1,13 @@
 const Login = () => {
   return (
     <div>
-      This is the Login page.
+      <form>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button>Login</button>
+      </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

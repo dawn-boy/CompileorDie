@@ -1,0 +1,11 @@
+{
+  "compileOrDieApi": {
+    "payload": {
+      "id": 1,
+      "question": "What is the Greatest Novel ever written?",
+      "description": "Pss.. its Jurassic Park."
+    },
+    "action": "user/showQuestion",
+    "error": null
+  }
+}
