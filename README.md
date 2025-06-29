@@ -1,4 +1,4 @@
-# Erebor
+# CompileOrDie
 Players are secretly assigned roles as either Hackers or Developers. The Hackers' goal is to sabotage the code and cause a system crash, while the Developers must work together to find the Hackers and fix the broken code before it's too late. Special roles like the Debugger, who can fix corrupted code, and the Cyber Guardian, who can investigate other players, add complexity and excitement to the game.
 
 ## Sequence
