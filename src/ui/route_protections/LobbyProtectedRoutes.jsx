@@ -1,19 +1,20 @@
-import { useSelector } from 'react-redux'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import apiCheckLobby from '../../services/teams/apiCheckLobby.js'
 
 const LobbyProtectedRoutes = () => {
-  const joinedLobby = useSelector(state => state.user.joinedLobby)
-  const navigate = useNavigate()
-
+  const [inLobby, setInLobby] = useState(null)
   useEffect(() => {
-    if (!joinedLobby)
-      navigate('/error', {
-        replace: true,
-        state: { errorMessage: 'You must join a lobby first' },
-      })
-  })
-  if (joinedLobby) return <Outlet />
+    async function updateLobby() {
+      const isFound = await apiCheckLobby()
+      setInLobby(isFound)
+    }
+    updateLobby()
+  }, [])
+
+  if (inLobby === null) return <div>Checking Lobby status...</div>
+  else if (inLobby) return <Outlet />
+  else return <div>You must be in a lobby to access this page.</div>
 }
 
 export default LobbyProtectedRoutes

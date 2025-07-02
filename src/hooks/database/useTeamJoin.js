@@ -1,11 +1,11 @@
 import { useMutation } from 'react-query'
-import { apiJoinTeam } from '../../services/database_functions/apiJoinTeam.js'
+import { joinTeamApi } from '../../services/teams/apiTeamJoin.js'
 import { useNavigate } from 'react-router-dom'
 
 function useTeamJoin() {
   const navigate = useNavigate()
   const { mutate: joinTeam, isLoading } = useMutation({
-    mutationFn: ({ teamCode }) => apiJoinTeam(teamCode),
+    mutationFn: ({ teamCode }) => joinTeamApi(teamCode),
     onMutate: () => navigate('/loading', { replace: true }),
     onSuccess: ({ data }) => {
       navigate('/profile/lobby', { replace: true })

@@ -1,7 +1,8 @@
-import { checkRecord, insertTable } from '../apiDatabaseOps.js'
-import { getCurrentUser } from '../apiAuth.js'
+import getCurrentUser from '../users/apiGetCurrentUser.js'
+import checkRecord from '../database/operations/checkRecord.js'
+import insertTable from '../database/operations/insertTable.js'
 
-async function apiJoinTeam(teamCode) {
+async function joinTeamApi(teamCode) {
   const { isFound: teamFound, data: teamData } = await checkRecord(
     'teams_table',
     'team_code',
@@ -25,4 +26,4 @@ async function apiJoinTeam(teamCode) {
   if (!teamFound) throw new Error('Team not found')
   if (playerAlreadyJoined) throw new Error('You have already joined this team')
 }
-export { apiJoinTeam }
+export { joinTeamApi }

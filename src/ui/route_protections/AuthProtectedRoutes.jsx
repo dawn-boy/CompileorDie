@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import apiSupabase from '../../services/apiSupabase.js'
+import apiSupabase from '../../services/database/apiSupabase.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, setIsLoading } from '../../redux/userSlice.js'
 import Loading from '../Loading.jsx'

@@ -1,17 +1,19 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { registerApi } from '../../services/apiAuth.js'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { updateTable } from '../../services/apiDatabaseOps.js'
+import apiUpdateUserPresence from '../../services/users/apiUpdateUserPresence.js'
+import updateTable from '../../services/database/operations/updateTable.js'
+import apiRegister from '../../services/authentication/apiRegister.js'
 
 function useRegister() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   const { mutate: register, isLoading } = useMutation({
-    mutationFn: registerApi,
+    mutationFn: apiRegister,
     onMutate: () => navigate('/loading', { replace: true }),
     onSuccess: ({ data, registerData }) => {
+      apiUpdateUserPresence('online')
       queryClient.setQueryData(['user'], data.user)
       updateTable('users_table', 'id', data.user.id, {
         name: registerData.name,

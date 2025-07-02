@@ -1,11 +1,9 @@
 import Form from '../../forms/Form.jsx'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useLogin } from '../../hooks/authentication/useLogin.js'
-import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const { login } = useLogin()
-  const navigate = useNavigate()
   const methods = useForm()
 
   function onSubmit(resp) {
