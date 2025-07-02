@@ -1,11 +1,11 @@
-import Question from './Question.jsx';
-import Answer from './Answer.jsx';
-import { useNavigate } from 'react-router-dom';
+import Question from './Question.jsx'
+import Answer from './Answer.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const UserInput = ({ questionIndex, question, description }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   function handleNext() {
-    navigate('/loading', { replace: true });
+    navigate('/loading', { replace: true })
   }
   return (
     <div>
@@ -16,7 +16,7 @@ const UserInput = ({ questionIndex, question, description }) => {
       />
       <Answer handleNext={handleNext} />
     </div>
-  );
-};
+  )
+}
 
-export default UserInput;
+export default UserInput

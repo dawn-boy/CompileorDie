@@ -1,34 +1,26 @@
-import { useState } from 'react'
-import { useLogin } from '../../hooks/useLogin.js'
+import Form from '../../forms/Form.jsx'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useLogin } from '../../hooks/authentication/useLogin.js'
+import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { login, isLoading } = useLogin()
+function Login() {
+  const { login } = useLogin()
+  const navigate = useNavigate()
+  const methods = useForm()
 
-  function handleSubmit(e) {
-    e.preventDefault()
-
-    if (!email || !password) return alert('Please fill in all fields')
-    login({ email, password })
+  function onSubmit(resp) {
+    login(resp)
   }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        onChange={e => setEmail(e.target.value)}
-        disabled={isLoading}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-        disabled={isLoading}
-      />
-      <button disabled={isLoading}>{isLoading ? 'Loading..' : 'Login'}</button>
-    </form>
+    <div>
+      <FormProvider {...methods}>
+        <Form onSubmit={onSubmit}>
+          <Form.Email />
+          <Form.Password />
+          <Form.Submit label="Access" />
+        </Form>
+      </FormProvider>
+    </div>
   )
 }
 

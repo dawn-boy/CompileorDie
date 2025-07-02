@@ -12,10 +12,15 @@ async function logoutApi() {
   const { error } = await apiSupabase.auth.signOut()
   if (error) throw new Error(`Error signing out: ${error.message}`)
 }
-async function registerApi({ email, password }) {
-  const { data, error } = await apiSupabase.auth.signUp({ email, password })
+async function registerApi(registerData) {
+  const { data, error } = await apiSupabase.auth.signUp(registerData)
   if (error) throw new Error(`Error signing up: ${error.message}`)
-  return data
+  return { data, registerData }
+}
+async function getCurrentUser() {
+  const { data: user, error } = await apiSupabase.auth.getUser()
+  if (error) throw new Error(`Error getting user: ${error.message}`)
+  return user?.user
 }
 
-export { loginApi, logoutApi, registerApi }
+export { loginApi, logoutApi, registerApi, getCurrentUser }

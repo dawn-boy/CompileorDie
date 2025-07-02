@@ -1,4 +1,4 @@
-import { loginApi } from '../services/apiAuth.js'
+import { loginApi } from '../../services/apiAuth.js'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -7,8 +7,9 @@ function useLogin() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const { mutate: login, isLoading } = useMutation({
+  const { mutateAsync: login, isLoading } = useMutation({
     mutationFn: loginApi,
+    onMutate: () => navigate('/loading', { replace: true }),
     onSuccess: user => {
       queryClient.setQueryData(['user'], user.user)
       toast.success('Login successful')
@@ -16,6 +17,7 @@ function useLogin() {
     },
     onError: () => {
       toast.error('Login failed')
+      navigate('/login', { replace: true })
     },
   })
 

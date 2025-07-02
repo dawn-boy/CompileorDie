@@ -1,10 +1,10 @@
 import UserInput from './UserInput.jsx'
 import PlayerChoice from './PlayerChoice.jsx'
 import { useSelector } from 'react-redux'
+import ErrorPage from '../../ui/ErrorPage.jsx'
 
 const GamePlay = () => {
   const response = useSelector(state => state.api)
-  console.log(response)
 
   function handleRender() {
     switch (response.action) {
@@ -18,6 +18,9 @@ const GamePlay = () => {
         )
       case 'user/showPlayers':
         return <PlayerChoice />
+
+      default:
+        return <ErrorPage />
     }
   }
 

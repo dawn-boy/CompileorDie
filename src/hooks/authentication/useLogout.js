@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { logoutApi } from '../services/apiAuth.js'
+import { logoutApi } from '../../services/apiAuth.js'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ function useLogout() {
   const queryClient = useQueryClient()
   const { isLoading, mutate: logout } = useMutation({
     mutationFn: logoutApi,
+    onMutate: () => navigate('/loading', { replace: true }),
     onSuccess: () => {
       queryClient.removeQueries('user')
       toast.success('Logout successful')

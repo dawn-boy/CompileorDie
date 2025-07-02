@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import apiSupabase from '../services/apiSupabase.js'
+import apiSupabase from '../../services/apiSupabase.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser, setIsLoading } from '../redux/userSlice.js'
-import Loading from './Loading.jsx'
+import { setUser, setIsLoading } from '../../redux/userSlice.js'
+import Loading from '../Loading.jsx'
 
-const ProtectedRoute = () => {
+const AuthProtectedRoutes = () => {
   const user = useSelector(state => state.user.userData)
   const isLoading = useSelector(state => state.user.isLoading)
   const dispatch = useDispatch()
@@ -29,4 +29,4 @@ const ProtectedRoute = () => {
   if (user) return <Outlet />
 }
 
-export default ProtectedRoute
+export default AuthProtectedRoutes

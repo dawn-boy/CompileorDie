@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { useLogout } from '../../hooks/useLogout.js'
+import { useLogout } from '../../hooks/authentication/useLogout.js'
 import Loading from '../../ui/Loading.jsx'
 
 const Profile = () => {

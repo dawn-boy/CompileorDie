@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   userData: null,
   isLoading: false,
+  joinedLobby: false,
 }
 
 const userSlice = createSlice({
@@ -15,8 +16,11 @@ const userSlice = createSlice({
     setIsLoading(state, action) {
       state.isLoading = action.payload
     },
+    setLobby(state, action) {
+      state.joinedLobby = action.payload
+    },
   },
 })
 
-export const { setUser, setIsLoading } = userSlice.actions
+export const { setUser, setIsLoading, setLobby } = userSlice.actions
 export default userSlice.reducer

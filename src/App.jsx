@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import AppLayout from './ui/AppLayout.jsx'
 import HomePage from './features/home/HomePage.jsx'
 import Login from './features/authentication/Login.jsx'
-import SignUp from './features/authentication/SignUp.jsx'
+import Register from './features/authentication/Register.jsx'
 import Profile from './features/profile/Profile.jsx'
 import Customize from './features/profile/Customize.jsx'
 import Team from './features/profile/Team.jsx'
@@ -17,7 +17,9 @@ import { Provider } from 'react-redux'
 import ErrorPage from './ui/ErrorPage.jsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Toaster } from 'react-hot-toast'
-import ProtectedRoute from './ui/ProtectedRoute.jsx'
+import AuthProtectedRoutes from './ui/route_protections/AuthProtectedRoutes.jsx'
+import Lobby from './features/profile/Lobby.jsx'
+import LobbyProtectedRoutes from './ui/route_protections/LobbyProtectedRoutes.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,8 +43,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: '/signup',
-        element: <SignUp />,
+        path: '/register',
+        element: <Register />,
       },
       {
         path: '/loading',
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
         element: <ErrorPage />,
       },
       {
-        element: <ProtectedRoute />,
+        element: <AuthProtectedRoutes />,
         children: [
           {
             path: 'profile',
@@ -70,6 +72,15 @@ const router = createBrowserRouter([
               {
                 path: 'abouts',
                 element: <Abouts />,
+              },
+              {
+                element: <LobbyProtectedRoutes />,
+                children: [
+                  {
+                    path: 'lobby',
+                    element: <Lobby />,
+                  },
+                ],
               },
             ],
           },
@@ -96,15 +107,15 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <Toaster
+          position="top-center"
+          gutter={15}
+          toastOptions={{
+            success: { duration: 3000 },
+            error: { duration: 5000 },
+          }}
+        />
       </QueryClientProvider>
-      <Toaster
-        position="top-center"
-        gutter={15}
-        toastOptions={{
-          success: { duration: 3000 },
-          error: { duration: 5000 },
-        }}
-      />
     </Provider>
   )
 }
