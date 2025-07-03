@@ -12,14 +12,15 @@ import Countdown from './ui/Countdown.jsx'
 import GamePlay from './features/game/GamePlay.jsx'
 import End from './features/end/End.jsx'
 import Loading from './ui/Loading.jsx'
-import store from './redux/store.js'
+import store, { persistor } from './redux/store.js'
 import { Provider } from 'react-redux'
 import ErrorPage from './ui/ErrorPage.jsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Toaster } from 'react-hot-toast'
 import AuthProtectedRoutes from './ui/route_protections/AuthProtectedRoutes.jsx'
-import Lobby from './features/profile/Lobby.jsx'
+import Lobby from './features/lobby/Lobby.jsx'
 import LobbyProtectedRoutes from './ui/route_protections/LobbyProtectedRoutes.jsx'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -105,17 +106,19 @@ const router = createBrowserRouter([
 function App() {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster
-          position="top-center"
-          gutter={15}
-          toastOptions={{
-            success: { duration: 3000 },
-            error: { duration: 5000 },
-          }}
-        />
-      </QueryClientProvider>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <Toaster
+            position="top-center"
+            gutter={15}
+            toastOptions={{
+              success: { duration: 3000 },
+              error: { duration: 5000 },
+            }}
+          />
+        </QueryClientProvider>
+      </PersistGate>
     </Provider>
   )
 }

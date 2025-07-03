@@ -1,17 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  userData: null,
+  sessionUserData: null,
+  userProfileData: null,
   isLoading: true,
-  joinedLobby: false,
+  joinedLobby: null,
+  teamCode: null,
 }
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action) {
-      state.userData = action.payload
+    setSessionUser(state, action) {
+      state.sessionUserData = action.payload
+    },
+    setProfileUser(state, action) {
+      state.userProfileData = action.payload
     },
     setIsLoading(state, action) {
       state.isLoading = action.payload
@@ -19,8 +24,17 @@ const userSlice = createSlice({
     setLobby(state, action) {
       state.joinedLobby = action.payload
     },
+    setTeamCode(state, action) {
+      state.teamCode = action.payload
+    },
   },
 })
 
-export const { setUser, setIsLoading, setLobby } = userSlice.actions
+export const {
+  setSessionUser,
+  setProfileUser,
+  setIsLoading,
+  setLobby,
+  setTeamCode,
+} = userSlice.actions
 export default userSlice.reducer

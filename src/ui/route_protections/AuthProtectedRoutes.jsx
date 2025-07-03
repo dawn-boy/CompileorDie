@@ -1,30 +1,17 @@
-import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
-import apiSupabase from '../../services/database/apiSupabase.js'
-import { useSelector, useDispatch } from 'react-redux'
-import { setUser, setIsLoading } from '../../redux/userSlice.js'
+import { useSelector } from 'react-redux'
 import Loading from '../Loading.jsx'
+import useAuthCheck from '../../hooks/authentication/useAuthCheck.js'
 
 const AuthProtectedRoutes = () => {
-  const user = useSelector(state => state.user.userData)
+  const user = useSelector(state => state.user.sessionUserData)
   const isLoading = useSelector(state => state.user.isLoading)
-  const dispatch = useDispatch()
 
-  useEffect(() => {
-    const { data: user } = apiSupabase.auth.getUser()
-    dispatch(setUser(user))
-    dispatch(setIsLoading(false))
+  useAuthCheck()
 
-    const { data } = apiSupabase.auth.onAuthStateChange((event, session) =>
-      dispatch(setUser(session?.user ?? null))
-    )
-
-    return () => data.subscription.unsubscribe()
-  }, [dispatch])
-
-  if (isLoading) return <Loading />
   if (!isLoading && !user)
     return <div>You must be logged in to access this page.</div>
+  if (isLoading) return <Loading />
 
   if (user) return <Outlet />
 }

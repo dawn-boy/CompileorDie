@@ -1,4 +1,4 @@
-import getCurrentUser from '../users/apiGetCurrentUser.js'
+import getCurrentUser from '../users/apiGetUser.js'
 import checkRecord from '../database/operations/checkRecord.js'
 import insertTable from '../database/operations/insertTable.js'
 
@@ -21,7 +21,7 @@ async function joinTeamApi(teamCode) {
       team_id: teamId,
       user_id: currentUser,
     })
-    return { data, error }
+    return { data, error, teamCode }
   }
   if (!teamFound) throw new Error('Team not found')
   if (playerAlreadyJoined) throw new Error('You have already joined this team')

@@ -1,8 +1,8 @@
 import updateRecord from '../database/operations/updateRecord.js'
-import apiGetCurrentUser from './apiGetCurrentUser.js'
+import apiGetUser from './apiGetUser.js'
 
 async function apiUpdateUserPresence(action) {
-  const user = await apiGetCurrentUser()
+  const user = await apiGetUser()
   if (!user) throw new Error('User not logged in')
   switch (action) {
     case 'online':
@@ -29,6 +29,13 @@ async function apiUpdateUserPresence(action) {
         }
       )
       if (logoutError) throw new Error(logoutError.message)
+      const { error: statusError } = await updateRecord(
+        'players_table',
+        'user_id',
+        user.id,
+        { status: 'not-ready' }
+      )
+      if (statusError) throw new Error(statusError.message)
       break
     default:
       return

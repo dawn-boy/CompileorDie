@@ -1,8 +1,8 @@
 import checkRecord from '../database/operations/checkRecord.js'
-import apiGetCurrentUser from '../users/apiGetCurrentUser.js'
+import apiGetUser from '../users/apiGetUser.js'
 
 async function apiCheckLobby() {
-  const currentUserId = (await apiGetCurrentUser())?.id
+  const currentUserId = (await apiGetUser())?.id
   const { isFound } = await checkRecord(
     'players_table',
     'user_id',
