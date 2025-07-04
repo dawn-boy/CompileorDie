@@ -5,7 +5,11 @@ import apiUpdateUserPresence from '../../services/users/apiUpdateUserPresence.js
 import apiLogin from '../../services/authentication/apiLogin.js'
 import { useDispatch } from 'react-redux'
 import apiCheckLobby from '../../services/teams/apiCheckLobby.js'
-import { setLobby, setSessionUser } from '../../redux/userSlice.js'
+import {
+  setLobby,
+  setProfileUser,
+  setSessionUser,
+} from '../../redux/userSlice.js'
 
 function useLogin() {
   const navigate = useNavigate()

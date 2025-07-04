@@ -10,7 +10,7 @@ function useTeamJoin() {
   const { mutate: joinTeam, isLoading } = useMutation({
     mutationFn: ({ teamCode }) => joinTeamApi(teamCode),
     onMutate: () => navigate('/loading', { replace: true }),
-    onSuccess: ({ data, variables }) => {
+    onSuccess: variables => {
       dispatch(setLobby(true))
       dispatch(setTeamCode(variables.teamCode))
       navigate('/profile/lobby', {
@@ -19,17 +19,31 @@ function useTeamJoin() {
     },
     onError: (error, variables) => {
       const { teamCode } = variables
-      if (error.message === 'Team not found')
-        navigate('/error', {
-          replace: true,
-          state: { errorMessage: 'Team not found' },
-        })
-      if (error.message === 'You have already joined this team') {
-        dispatch(setLobby(true))
-        dispatch(setTeamCode(teamCode))
-        navigate('/profile/lobby', {
-          replace: true,
-        })
+      switch (error.message) {
+        case 'Team not found':
+          navigate('/error', {
+            replace: true,
+            state: { errorMessage: 'Team not found' },
+          })
+          break
+        case 'You have already joined this team':
+          dispatch(setLobby(true))
+          dispatch(setTeamCode(teamCode))
+          navigate('/profile/lobby', {
+            replace: true,
+          })
+          break
+        case 'Team is full':
+          navigate('/error', {
+            replace: true,
+            state: { errorMessage: 'Team is full' },
+          })
+          break
+        default:
+          navigate('/error', {
+            replace: true,
+            state: { errorMessage: error.message },
+          })
       }
     },
   })

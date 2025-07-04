@@ -1,6 +1,7 @@
 import getCurrentUser from '../users/apiGetUser.js'
 import checkRecord from '../database/operations/checkRecord.js'
 import insertTable from '../database/operations/insertTable.js'
+import getRecord from '../database/operations/getRecord.js'
 
 async function joinTeamApi(teamCode) {
   const { isFound: teamFound, data: teamData } = await checkRecord(
@@ -17,6 +18,12 @@ async function joinTeamApi(teamCode) {
   )
 
   if (teamFound && !playerAlreadyJoined) {
+    const { data: playersData } = await getRecord(
+      'players_table',
+      'team_id',
+      teamId
+    )
+    if (playersData.length >= 5) throw new Error('Team is full')
     const { data, error } = insertTable('players_table', {
       team_id: teamId,
       user_id: currentUser,

@@ -18,20 +18,17 @@ function useTeamViewRealtime(teamCode) {
   })
 
   useEffect(() => {
-    if (!teamData) return
-
     const channel = apiSupabase
       .channel(`players_table:${teamCode}`)
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE',
+          event: '*',
           schema: 'public',
           table: 'players_table',
         },
         async payload => {
           const newTeam = await apiFetchTeam(teamCode)
-          console.log('newTeam', newTeam)
           queryClient.setQueryData(['teamCode', teamCode], newTeam)
         }
       )

@@ -18,8 +18,8 @@ function useAuthCheck() {
         const { data, error } = await getRecord('users_table', 'id', user?.id)
         if (error) throw new Error(error.message)
         dispatch(setProfileUser(data[0]))
-        dispatch(setIsLoading(false))
       }
+      dispatch(setIsLoading(false))
     }
 
     getUser()
