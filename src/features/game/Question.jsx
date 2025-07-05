@@ -6,7 +6,7 @@ const Question = ({ questionIndex, question, description }) => {
       </h1>
       <h3>{description}</h3>
     </div>
-  );
-};
+  )
+}
 
-export default Question;
+export default Question

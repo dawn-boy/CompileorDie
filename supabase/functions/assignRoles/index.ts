@@ -33,17 +33,19 @@ serve(async (req: Request): Promise<Response> => {
 
   const { data: teamId } = await getTeamId(teamCode, origin)
   const { data: players } = await getPlayers(teamId, origin)
+  const notAssigned = players.every(player => player.role === null)
 
   for (const [index, { id }] of players.entries()) {
-    await updateRecord(
-      'players_table',
-      'id',
-      id,
-      {
-        role: shuff[index],
-      },
-      origin
-    )
+    if (notAssigned)
+      await updateRecord(
+        'players_table',
+        'id',
+        id,
+        {
+          role: shuffled[index],
+        },
+        origin
+      )
   }
 
   return new Response(JSON.stringify({ success: 'Roles assigned' }), {

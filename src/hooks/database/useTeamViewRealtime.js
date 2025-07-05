@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
 import { useEffect } from 'react'
 import apiSupabase from '../../services/database/apiSupabase.js'
+import updateRecord from '../../services/database/operations/updateRecord.js'
 
 function useTeamViewRealtime(teamCode, setAllReady) {
   const queryClient = useQueryClient()

@@ -21,6 +21,7 @@ import AuthProtectedRoutes from './ui/route_protections/AuthProtectedRoutes.jsx'
 import Lobby from './features/lobby/Lobby.jsx'
 import LobbyProtectedRoutes from './ui/route_protections/LobbyProtectedRoutes.jsx'
 import { PersistGate } from 'redux-persist/integration/react'
+import Waiting from './ui/Waiting.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
           {
             path: 'gameplay',
             element: <GamePlay />,
+          },
+          {
+            path: '/waiting',
+            element: <Waiting />,
           },
           {
             path: 'end',

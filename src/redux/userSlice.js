@@ -6,6 +6,10 @@ const initialState = {
   isLoading: true,
   joinedLobby: null,
   teamCode: null,
+  role: null,
+  showWelcomeScreen: true,
+  round: 1,
+  chosenOne: null,
 }
 
 const userSlice = createSlice({
@@ -27,6 +31,21 @@ const userSlice = createSlice({
     setTeamCode(state, action) {
       state.teamCode = action.payload
     },
+    setRole(state, action) {
+      state.role = action.payload
+    },
+    setShowWelcomeScreen(state, action) {
+      state.showWelcomeScreen = action.payload
+    },
+    incrementRound(state) {
+      state.round += 1
+    },
+    setRound(state, action) {
+      state.round = action.payload
+    },
+    setChosenOne(state, action) {
+      state.chosenOne = action.payload
+    },
   },
 })
 
@@ -36,5 +55,10 @@ export const {
   setIsLoading,
   setLobby,
   setTeamCode,
+  setRole,
+  setShowWelcomeScreen,
+  incrementRound,
+  setRound,
+  setChosenOne,
 } = userSlice.actions
 export default userSlice.reducer
