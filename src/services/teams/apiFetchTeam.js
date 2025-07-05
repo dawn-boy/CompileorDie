@@ -5,12 +5,12 @@ async function apiFetchTeam(teamCode) {
   const teamId = await apiGetTeamId(teamCode)
   const { data, error } = await apiSupabase
     .from('players_table')
-    .select('users_table (name), status')
+    .select('users_table (name), * ')
     .eq('team_id', teamId)
   if (error) return null
 
   const flatList = data.map(data => ({
-    status: data.status,
+    ...data,
     name: data.users_table.name,
   }))
 

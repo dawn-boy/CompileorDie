@@ -13,7 +13,6 @@ function UserGrid({ userData }) {
   const teamMembers = userData.filter(user => user.name !== name)
 
   if (isError) return <div>{error}</div>
-  console.log(isLoading, currentUser, teamMembers, userData)
   return (
     <div>
       <div>

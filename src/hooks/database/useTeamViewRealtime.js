@@ -3,7 +3,7 @@ import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
 import { useEffect } from 'react'
 import apiSupabase from '../../services/database/apiSupabase.js'
 
-function useTeamViewRealtime(teamCode) {
+function useTeamViewRealtime(teamCode, setAllReady) {
   const queryClient = useQueryClient()
   const {
     data: teamData = [],
@@ -30,6 +30,14 @@ function useTeamViewRealtime(teamCode) {
         async payload => {
           const newTeam = await apiFetchTeam(teamCode)
           queryClient.setQueryData(['teamCode', teamCode], newTeam)
+          if (
+            newTeam.length === 5 &&
+            newTeam.every(player => player.status === 'ready')
+          ) {
+            setAllReady(true)
+          } else {
+            setAllReady(false)
+          }
         }
       )
       .subscribe()
