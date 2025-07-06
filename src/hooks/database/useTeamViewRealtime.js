@@ -1,8 +1,7 @@
 import { useQuery, useQueryClient } from 'react-query'
-import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
+import apiFetchTeamMembers from '../../services/teams/apiFetchTeamMembers.js'
 import { useEffect } from 'react'
 import apiSupabase from '../../services/database/apiSupabase.js'
-import updateRecord from '../../services/database/operations/updateRecord.js'
 
 function useTeamViewRealtime(teamCode, setAllReady) {
   const queryClient = useQueryClient()
@@ -12,7 +11,7 @@ function useTeamViewRealtime(teamCode, setAllReady) {
     error,
   } = useQuery({
     queryKey: ['teamCode', teamCode],
-    queryFn: () => apiFetchTeam(teamCode),
+    queryFn: () => apiFetchTeamMembers(teamCode),
     enabled: !!teamCode,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
@@ -29,7 +28,7 @@ function useTeamViewRealtime(teamCode, setAllReady) {
           table: 'players_table',
         },
         async payload => {
-          const newTeam = await apiFetchTeam(teamCode)
+          const newTeam = await apiFetchTeamMembers(teamCode)
           queryClient.setQueryData(['teamCode', teamCode], newTeam)
           if (
             newTeam.length === 5 &&

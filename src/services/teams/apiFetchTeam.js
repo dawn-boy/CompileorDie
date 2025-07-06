@@ -1,20 +1,12 @@
-import apiSupabase from '../database/apiSupabase.js'
-import apiGetTeamId from './apiGetTeamId.js'
+import checkRecord from '../database/operations/checkRecord.js'
 
 async function apiFetchTeam(teamCode) {
-  const teamId = await apiGetTeamId(teamCode)
-  const { data, error } = await apiSupabase
-    .from('players_table')
-    .select('users_table (name), * ')
-    .eq('team_id', teamId)
-  if (error) return null
-
-  const flatList = data.map(data => ({
-    ...data,
-    name: data.users_table.name,
-  }))
-
-  return flatList
+  const { isFound, data } = await checkRecord(
+    'teams_table',
+    'team_code',
+    teamCode
+  )
+  return { isFound, data }
 }
 
 export default apiFetchTeam

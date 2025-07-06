@@ -2,19 +2,20 @@ import { useMutation, useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import apiLogout from '../../services/authentication/apiLogout.js'
-import useReduxReset from './useReduxReset.js'
+import { useDispatch } from 'react-redux'
+import { resetUserStates } from '../../redux/userSlice.js'
 
 function useLogout() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const reduxReset = useReduxReset()
+  const dispatch = useDispatch()
   const { isLoading, mutate: logout } = useMutation({
     mutationFn: apiLogout,
     onMutate: () => navigate('/loading', { replace: true }),
     onSuccess: () => {
       queryClient.removeQueries('user')
       toast.success('Logout successful')
-      reduxReset()
+      dispatch(resetUserStates())
       navigate('/', { replace: true })
     },
     onError: error => {

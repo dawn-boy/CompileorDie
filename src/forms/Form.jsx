@@ -6,6 +6,8 @@ import { ConfirmPassword } from './fields/ConfirmPassword.jsx'
 import { Name } from './fields/Name.jsx'
 import { Submit } from './fields/Submit.jsx'
 import { TextBox } from './fields/TextBox.jsx'
+import { SelectOptions } from './fields/SelectOptions.jsx'
+import { LabeledSelect } from './LabeledSelect.jsx'
 
 function Form({ children, onSubmit, onError = () => {} }) {
   const { handleSubmit } = useFormContext()
@@ -19,5 +21,7 @@ Form.ConfirmPassword = ConfirmPassword
 Form.Name = Name
 Form.TextBox = TextBox
 Form.Submit = Submit
+Form.SelectOptions = SelectOptions
+Form.LabeledSelect = LabeledSelect
 
 export default Form

@@ -1,16 +1,30 @@
 import Loading from '../../ui/Loading.jsx'
 import UserGrid from './UserGrid.jsx'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useTeamViewRealtime from '../../hooks/database/useTeamViewRealtime.js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useGameStateReset from '../../hooks/gameplay/useGameStateReset.js'
+import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
+import { setTeamInfo } from '../../redux/userSlice.js'
 
 const Lobby = () => {
   const teamCode = useSelector(state => state.user.teamCode)
+  const dispatch = useDispatch()
   const [allReady, setAllReady] = useState(false)
   const navigate = useNavigate()
+  const [team, setTeam] = useState({})
   useGameStateReset()
+
+  useEffect(() => {
+    async function getTeam() {
+      const { isFound, data } = await apiFetchTeam(teamCode)
+      dispatch(setTeamInfo(data))
+      setTeam(data)
+    }
+    getTeam()
+  }, [])
+
   const { teamData, isLoading, error } = useTeamViewRealtime(
     teamCode,
     setAllReady
@@ -29,7 +43,13 @@ const Lobby = () => {
       <div>
         {error && <div>Team not Found</div>}
         <div>
-          {teamData && <UserGrid userData={teamData} teamCode={teamCode} />}
+          {teamData && (
+            <UserGrid
+              userData={teamData}
+              teamCode={teamCode}
+              admin={team?.created_by_user_id}
+            />
+          )}
         </div>
       </div>
     )

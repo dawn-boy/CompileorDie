@@ -1,35 +1,24 @@
 import Question from './Question.jsx'
 import Answer from './Answer.jsx'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import apiGetPlayerId from '../../services/users/apiGetPlayerId.js'
-import { useEffect } from 'react'
-import insertTable from '../../services/database/operations/insertTable.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { incrementQuestionNumber } from '../../redux/userSlice.js'
 
-const UserInput = ({ questionIndex, question, description }) => {
+const UserInput = () => {
   const navigate = useNavigate()
-  const teamCode = useSelector(state => state.user.teamCode)
-  const round = useSelector(state => state.user.round)
+  const dispatch = useDispatch()
+  const questions = useSelector(state => state.user.questions)
+  const questionNumber = useSelector(state => state.user.questionNumber)
 
-  useEffect(() => {
-    ;(async () => {
-      const playerId = await apiGetPlayerId()
-      await insertTable('rounds_report', {
-        player_id: playerId,
-        round_num: round,
-        team_code: teamCode,
-      })
-    })()
-  }, [round, teamCode])
   function handleNext() {
     navigate('/waiting', { replace: true })
+    dispatch(incrementQuestionNumber())
   }
   return (
     <div>
       <Question
-        questionIndex={questionIndex}
-        question={question}
-        description={description}
+        {...questions[questionNumber]}
+        questionNumber={questionNumber}
       />
       <Answer handleNext={handleNext} />
     </div>

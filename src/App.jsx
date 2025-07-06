@@ -22,6 +22,8 @@ import Lobby from './features/lobby/Lobby.jsx'
 import LobbyProtectedRoutes from './ui/route_protections/LobbyProtectedRoutes.jsx'
 import { PersistGate } from 'redux-persist/integration/react'
 import Waiting from './ui/Waiting.jsx'
+import PlayerChoice from './features/game/PlayerChoice.jsx'
+import Vote from './features/game/Vote.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,7 +40,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: <Vote />,
       },
       {
         path: '/login',
@@ -95,7 +97,7 @@ const router = createBrowserRouter([
             element: <GamePlay />,
           },
           {
-            path: '/waiting',
+            path: 'waiting',
             element: <Waiting />,
           },
           {
