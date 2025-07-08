@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
+  clearEliminatedPlayers,
+  clearEliminationList,
   setAnswer,
   setChosenOne,
   setCycle,
+  setIsEliminated,
   setQuestion,
   setQuestionNumber,
   setQuestions,
@@ -26,6 +29,9 @@ function useGameStateReset() {
     dispatch(setQuestions([]))
     dispatch(setAnswer(null))
     dispatch(setQuestion(null))
+    dispatch(clearEliminationList())
+    dispatch(clearEliminatedPlayers())
+    dispatch(setIsEliminated(false))
   }, [dispatch])
 }
 

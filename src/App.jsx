@@ -22,8 +22,9 @@ import Lobby from './features/lobby/Lobby.jsx'
 import LobbyProtectedRoutes from './ui/route_protections/LobbyProtectedRoutes.jsx'
 import { PersistGate } from 'redux-persist/integration/react'
 import Waiting from './ui/Waiting.jsx'
-import PlayerChoice from './features/game/PlayerChoice.jsx'
-import Vote from './features/game/Vote.jsx'
+import Sussy from './features/game/players/cyberguardian/Sussy.jsx'
+import Elimination from './features/game/Elimination.jsx'
+import FloatAround from './features/game/FloatAround.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Vote />,
+        element: <HomePage />,
       },
       {
         path: '/login',
@@ -97,8 +98,17 @@ const router = createBrowserRouter([
             element: <GamePlay />,
           },
           {
+            path: 'elimination',
+            element: <Elimination />,
+          },
+          {
             path: 'waiting',
             element: <Waiting />,
+          },
+          { path: 'sussy', element: <Sussy /> },
+          {
+            path: 'floatAround',
+            element: <FloatAround />,
           },
           {
             path: 'end',

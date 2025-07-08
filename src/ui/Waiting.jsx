@@ -4,17 +4,23 @@ import apiSupabase from '../services/database/apiSupabase.js'
 import apiAnsweredCount from '../services/gameplay/apiAnsweredCount.js'
 import { useNavigate } from 'react-router-dom'
 import { incrementRound } from '../redux/userSlice.js'
+import apiJoinedCount from '../services/gameplay/apiJoinedCount.js'
 
 const Waiting = () => {
   const teamCode = useSelector(state => state.user.teamCode)
   const roundNum = useSelector(state => state.user.round)
+  const cycleNum = useSelector(state => state.user.cycle)
   const [remaining, setRemaining] = useState(5)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const updateRemaining = useCallback(async () => {
-    const answeredCount = (await apiAnsweredCount(teamCode, roundNum)) || 0
-    setRemaining(5 - answeredCount)
+    let count
+    if (roundNum === 4 || roundNum === 5)
+      count = (await apiJoinedCount(teamCode, roundNum, cycleNum)) || 0
+    else count = (await apiAnsweredCount(teamCode, roundNum, cycleNum)) || 0
+
+    setRemaining(5 - count)
   }, [teamCode, roundNum])
 
   useEffect(() => {
@@ -23,7 +29,7 @@ const Waiting = () => {
 
   useEffect(() => {
     const rounds_table = apiSupabase
-      .channel(`rouj`)
+      .channel(`rounds:${teamCode}:${roundNum}:${cycleNum}`)
       .on(
         'postgres_changes',
         {

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import useGameStateReset from '../../hooks/gameplay/useGameStateReset.js'
 import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
 import { setTeamInfo } from '../../redux/userSlice.js'
+import updateRecord from '../../services/database/operations/updateRecord.js'
 
 const Lobby = () => {
   const teamCode = useSelector(state => state.user.teamCode)
@@ -29,9 +30,15 @@ const Lobby = () => {
     teamCode,
     setAllReady
   )
-  if (allReady) {
-    navigate('/countdown', { replace: true, state: { teamCode } })
-  }
+
+  useEffect(() => {
+    if (allReady) {
+      updateRecord('teams_table', 'team_code', teamCode, {
+        team_status: 'in-game',
+      })
+      navigate('/countdown', { replace: true, state: { teamCode } })
+    }
+  }, [allReady, navigate, teamCode])
 
   if (error) return <div>{error}</div>
   if (!teamCode) {

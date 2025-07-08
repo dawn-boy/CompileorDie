@@ -18,6 +18,9 @@ const initialState = {
   questions: [],
   question: null,
   answer: null,
+  isEliminated: false,
+  eliminationList: {},
+  eliminatedPlayers: [],
 }
 
 const userSlice = createSlice({
@@ -85,6 +88,25 @@ const userSlice = createSlice({
     setTeamInfo(state, action) {
       state.teamInfo = action.payload
     },
+    setIsEliminated(state, action) {
+      state.isEliminated = action.payload
+    },
+    updateEliminationList(state, action) {
+      state.eliminationList = { ...state.eliminationList, ...action.payload }
+    },
+    clearEliminationList(state) {
+      state.eliminationList = {}
+    },
+    clearEliminatedPlayers(state) {
+      state.eliminatedPlayers = []
+    },
+    updateEliminatedPlayers(state, action) {
+      action.payload.forEach(player => {
+        if (!state.eliminatedPlayers.includes(player.toLowerCase())) {
+          state.eliminatedPlayers.push(player.toLowerCase())
+        }
+      })
+    },
   },
 })
 
@@ -110,5 +132,10 @@ export const {
   setQuestion,
   setAnswer,
   setQuestions,
+  setIsEliminated,
+  updateEliminationList,
+  clearEliminationList,
+  clearEliminatedPlayers,
+  updateEliminatedPlayers,
 } = userSlice.actions
 export default userSlice.reducer

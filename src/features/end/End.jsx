@@ -1,9 +1,10 @@
-const End = () => {
+const End = ({ message }) => {
   return (
     <div>
-      This is the End page.
+      <h1>Thanks for playing my game. Parzival.</h1>
+      <h2>{message}</h2>
     </div>
-  );
-};
+  )
+}
 
-export default End;
+export default End

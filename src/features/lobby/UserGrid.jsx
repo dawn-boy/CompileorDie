@@ -49,7 +49,6 @@ function UserGrid({ userData, admin }) {
         'team_code',
         teamCode
       )
-      console.log(data)
       if (data) {
         setDifficultyStatus(data[0].difficulty)
         getQuestions(data[0].difficulty)

@@ -1,18 +1,15 @@
 import apiSupabase from '../database/apiSupabase.js'
 
-async function apiAnsweredCount(teamCode, roundNum, cycle_num) {
+async function apiJoinedCount(teamCode, roundNum, cycle_num) {
   const { data, error } = await apiSupabase
     .from('rounds_report')
     .select('*')
     .eq('team_code', teamCode)
     .eq('round_num', roundNum)
     .eq('cycle_num', cycle_num)
-  const finished = data.reduce((acc, cur) => {
-    if (cur.answer !== null) acc += 1
-    return acc
-  }, 0)
 
-  return finished
+  console.log(roundNum, data.length, data)
+  return data.length
 }
 
-export default apiAnsweredCount
+export default apiJoinedCount

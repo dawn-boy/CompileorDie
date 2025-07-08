@@ -7,15 +7,8 @@ import { useSelector } from 'react-redux'
 
 const CyberGuardian = () => {
   const round = useSelector(state => state.user.round)
-  const chosenOne = useSelector(state => state.user.chosenOne)
+  const chosenOne = useSelector(state => state.user.chosenOne?.choice)
   const showWelcomeScreen = useSelector(state => state.user.showWelcomeScreen)
-  const response = {
-    payload: {
-      id: 1,
-      question: 'What is your name?',
-      description: 'This is a description',
-    },
-  }
   switch (round) {
     case 1:
       if (showWelcomeScreen) {
@@ -24,22 +17,10 @@ const CyberGuardian = () => {
       if (!chosenOne) {
         return <PlayerChoice />
       }
-      return (
-        <UserInput
-          questionIndex={response.payload.id}
-          question={response.payload.question}
-          description={response.payload.description}
-        />
-      )
+      return <UserInput />
     case 2:
     case 3:
-      return (
-        <UserInput
-          questionIndex={response.payload.id}
-          question={response.payload.question}
-          description={response.payload.description}
-        />
-      )
+      return <UserInput />
     case 4:
       return <Vote />
     default:
