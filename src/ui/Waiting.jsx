@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useCallback, useEffect, useState } from 'react'
 import apiSupabase from '../services/database/apiSupabase.js'
 import apiAnsweredCount from '../services/gameplay/apiAnsweredCount.js'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { incrementRound } from '../redux/userSlice.js'
 import apiJoinedCount from '../services/gameplay/apiJoinedCount.js'
 
@@ -13,10 +13,12 @@ const Waiting = () => {
   const [remaining, setRemaining] = useState(5)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const location = useLocation()
+  const fromVotingPage = location?.state?.fromVotingPage || false
 
   const updateRemaining = useCallback(async () => {
     let count
-    if (roundNum === 4 || roundNum === 5)
+    if (fromVotingPage)
       count = (await apiJoinedCount(teamCode, roundNum, cycleNum)) || 0
     else count = (await apiAnsweredCount(teamCode, roundNum, cycleNum)) || 0
 
@@ -45,8 +47,11 @@ const Waiting = () => {
 
   useEffect(() => {
     if (remaining === 0) {
-      dispatch(incrementRound())
-      navigate('/gameplay', { replace: true })
+      if (fromVotingPage) navigate('/elimination', { replace: true })
+      else {
+        dispatch(incrementRound())
+        navigate('/gameplay', { replace: true })
+      }
     }
   }, [remaining, dispatch, navigate])
   return (

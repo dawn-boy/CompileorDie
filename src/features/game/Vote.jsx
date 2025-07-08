@@ -28,7 +28,7 @@ const Vote = () => {
     dispatch(setChosenOne({ choice: null }))
     dispatch(setRound(1))
     dispatch(incrementCycle())
-    navigate('/elimination', { replace: true })
+    navigate('/waiting', { replace: true, state: { fromVotingPage: true } })
   }, [selected, dispatch, navigate, role])
 
   function handleSubmit(resp) {
@@ -39,6 +39,7 @@ const Vote = () => {
   useReport(confirm, setConfirm, selected, handleNext, {
     voted: selected.choice,
     isCompilable: true,
+    haveVoted: true,
   })
 
   const updatedTeam = team.filter(

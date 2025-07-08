@@ -1,20 +1,13 @@
 import { useEffect, useState } from 'react'
 import ApiSupabase from '../../services/database/apiSupabase.js'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import MemberInfo from './MemberInfo.jsx'
-import {
-  incrementCycle,
-  setChosenOne,
-  setRound,
-} from '../../redux/userSlice.js'
 
 const Elimination = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const teamCode = useSelector(state => state.user.teamCode)
-  const role = useSelector(state => state.user.role)
   const cycle = useSelector(state => state.user.cycle)
 
   const [clicked, setClicked] = useState(false)
@@ -48,7 +41,7 @@ const Elimination = () => {
           .filter(
             player =>
               player.round_num === 4 &&
-              player.cycle_num === cycle &&
+              player.cycle_num === cycle - 1 &&
               player.player_id !== player_id &&
               player.voted === player_id
           )
