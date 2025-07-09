@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   incrementCycle,
-  incrementRound,
   setChosenOne,
   setRound,
 } from '../../redux/userSlice.js'
@@ -20,7 +19,6 @@ const Vote = () => {
   const [confirm, setConfirm] = useState('')
   const teamData = useSelector(state => state.user.team)
   const currentUserData = useSelector(state => state.user.userProfileData)
-  const [survivorsList, setSurvivorsList] = useState({})
   const alreadyEliminatedPlayers = useSelector(
     state => state.user.eliminatedPlayers
   )

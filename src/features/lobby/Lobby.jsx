@@ -8,6 +8,7 @@ import useGameStateReset from '../../hooks/gameplay/useGameStateReset.js'
 import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
 import { setTeamInfo } from '../../redux/userSlice.js'
 import updateRecord from '../../services/database/operations/updateRecord.js'
+import getRecord from '../../services/database/operations/getRecord.js'
 
 const Lobby = () => {
   const teamCode = useSelector(state => state.user.teamCode)
@@ -37,6 +38,7 @@ const Lobby = () => {
         team_status: 'in-game',
       })
       navigate('/countdown', { replace: true, state: { teamCode } })
+    } else {
     }
   }, [allReady, navigate, teamCode])
 

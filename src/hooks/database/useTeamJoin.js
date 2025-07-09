@@ -20,10 +20,10 @@ function useTeamJoin() {
     onError: (error, variables) => {
       const { teamCode } = variables
       switch (error.message) {
-        case 'Team not found':
+        case 'JoinTeam not found':
           navigate('/error', {
             replace: true,
-            state: { errorMessage: 'Team not found' },
+            state: { errorMessage: 'JoinTeam not found' },
           })
           break
         case 'You have already joined this team':
@@ -33,10 +33,10 @@ function useTeamJoin() {
             replace: true,
           })
           break
-        case 'Team is full':
+        case 'JoinTeam is full':
           navigate('/error', {
             replace: true,
-            state: { errorMessage: 'Team is full' },
+            state: { errorMessage: 'JoinTeam is full' },
           })
           break
         default:

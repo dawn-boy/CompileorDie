@@ -6,7 +6,7 @@ import Login from './features/authentication/Login.jsx'
 import Register from './features/authentication/Register.jsx'
 import Profile from './features/profile/Profile.jsx'
 import Customize from './features/profile/Customize.jsx'
-import Team from './features/profile/Team.jsx'
+import JoinTeam from './features/profile/JoinTeam.jsx'
 import Abouts from './features/profile/Abouts.jsx'
 import Countdown from './features/lobby/Countdown.jsx'
 import GamePlay from './features/game/GamePlay.jsx'
@@ -25,6 +25,7 @@ import Waiting from './ui/Waiting.jsx'
 import Sussy from './features/game/players/cyberguardian/Sussy.jsx'
 import Elimination from './features/game/Elimination.jsx'
 import FloatAround from './features/game/FloatAround.jsx'
+import CreateTeam from './features/profile/CreateTeam.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -71,8 +72,12 @@ const router = createBrowserRouter([
                 element: <Customize />,
               },
               {
-                path: 'teams',
-                element: <Team />,
+                path: 'joinTeam',
+                element: <JoinTeam />,
+              },
+              {
+                path: 'createTeam',
+                element: <CreateTeam />,
               },
               {
                 path: 'abouts',
