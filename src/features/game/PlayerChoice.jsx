@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FormProvider, useForm } from 'react-hook-form'
 import Form from '../../forms/Form.jsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import getTeamNames from '../../helpers/getTeamNames.js'
 import useReport from '../../hooks/gameplay/useReport.js'
 import { useNavigate } from 'react-router-dom'
 import { setChosenOne } from '../../redux/userSlice.js'
+import apiFetchTeamMembers from '../../services/teams/apiFetchTeamMembers.js'
 
 const PlayerChoice = () => {
   const dispatch = useDispatch()

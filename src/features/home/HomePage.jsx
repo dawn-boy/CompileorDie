@@ -3,12 +3,6 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const HomePage = () => {
-  useEffect(() => {
-    async function triggerRoles() {
-      await apiTriggerRoles()
-    }
-    triggerRoles()
-  }, [])
   return (
     <div>
       <Link to="/login">Login</Link>

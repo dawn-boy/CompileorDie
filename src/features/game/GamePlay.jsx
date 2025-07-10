@@ -101,7 +101,6 @@ const GamePlay = () => {
   }, [gameStatus, eliminatedCount, teamCode])
 
   function handleRender() {
-    console.log(gameStatus, eliminatedCount[false])
     if (gameStatus === null && cycle !== 1)
       return <div>Calculating the Results...</div>
     if (gameStatus === false) {

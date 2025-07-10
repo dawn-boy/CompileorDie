@@ -3,12 +3,13 @@ import UserGrid from './UserGrid.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import useTeamViewRealtime from '../../hooks/database/useTeamViewRealtime.js'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useGameStateReset from '../../hooks/gameplay/useGameStateReset.js'
 import apiFetchTeam from '../../services/teams/apiFetchTeam.js'
 import { setTeamInfo } from '../../redux/userSlice.js'
 import updateRecord from '../../services/database/operations/updateRecord.js'
 import getRecord from '../../services/database/operations/getRecord.js'
+import apiTriggerRoles from '../../services/gameplay/apiTriggerRoles.js'
 
 const Lobby = () => {
   const teamCode = useSelector(state => state.user.teamCode)
@@ -31,9 +32,12 @@ const Lobby = () => {
     teamCode,
     setAllReady
   )
-
   useEffect(() => {
+    async function triggerRoles() {
+      await apiTriggerRoles(teamCode)
+    }
     if (allReady) {
+      triggerRoles()
       updateRecord('teams_table', 'team_code', teamCode, {
         team_status: 'in-game',
       })

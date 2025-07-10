@@ -21,6 +21,7 @@ const initialState = {
   isEliminated: false,
   eliminationList: {},
   eliminatedPlayers: [],
+  previousResults: null,
 }
 
 const userSlice = createSlice({
@@ -83,7 +84,7 @@ const userSlice = createSlice({
       state.playerId = action.payload
     },
     setTeam(state, action) {
-      state.team = action.payload
+      state.team = action.payload.map(({ role, ...rest }) => rest)
     },
     setTeamInfo(state, action) {
       state.teamInfo = action.payload
@@ -99,6 +100,9 @@ const userSlice = createSlice({
     },
     clearEliminatedPlayers(state) {
       state.eliminatedPlayers = []
+    },
+    setPreviousResults(state, action) {
+      state.previousResults = action.payload
     },
     updateEliminatedPlayers(state, action) {
       action.payload.forEach(player => {
@@ -132,6 +136,7 @@ export const {
   setQuestion,
   setAnswer,
   setQuestions,
+  setPreviousResults,
   setIsEliminated,
   updateEliminationList,
   clearEliminationList,
