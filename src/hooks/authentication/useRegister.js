@@ -18,11 +18,11 @@ function useRegister() {
       updateTable('users_table', 'id', data.user.id, {
         name: registerData.name,
       })
-      toast.success('Registeration successful')
+      toast.success('Registration successful')
       navigate('/profile', { replace: true })
     },
     onError: () => {
-      toast.error('Registeration failed')
+      toast.error('Registration failed')
       navigate('/error', {
         replace: true,
         state: { errorMessage: "User already exists. You're cooked bruh" },
