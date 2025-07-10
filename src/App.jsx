@@ -26,6 +26,7 @@ import Sussy from './features/game/players/cyberguardian/Sussy.jsx'
 import Elimination from './features/game/Elimination.jsx'
 import FloatAround from './features/game/FloatAround.jsx'
 import CreateTeam from './features/profile/CreateTeam.jsx'
+import NavBar from './features/home/NavBar.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {

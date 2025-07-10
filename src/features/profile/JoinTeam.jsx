@@ -10,34 +10,23 @@ import toast from 'react-hot-toast'
 const JoinTeam = () => {
   const { joinTeam } = useTeamJoin()
   const dispatch = useDispatch()
-  const [code, setCode] = useState('')
-  const [teamData, setTeamData] = useState([])
 
-  useEffect(() => {
-    async function getTeamData() {
-      if (code) {
-        const { isFound, data } = await apiFetchTeam(code)
-        console.log(data, isFound)
-        if (isFound) setTeamData(data)
-      }
-    }
-    getTeamData()
-  }, [code])
-
-  function onSubmit(resp) {
+  async function onSubmit(resp) {
     const { 'team-code': teamCode } = resp
-    setCode(teamCode)
+    if (teamCode) {
+      const { data } = await apiFetchTeam(teamCode)
+      if (!data) toast.error("Team doesn't exist!")
+      if (data) {
+        const teamStatus = data?.team_status
 
-    const teamStatus = teamData?.team_status
-    console.log(teamData)
-
-    if (teamStatus === 'waiting' || teamStatus === 'finished') {
-      setCode(teamCode)
-      joinTeam({ teamCode })
-      dispatch(setLobby(true))
-    }
-    if (teamStatus === 'in-game') {
-      toast.error('The Game has already Begun!')
+        if (teamStatus === 'waiting' || teamStatus === 'finished') {
+          joinTeam({ teamCode })
+          dispatch(setLobby(true))
+        }
+        if (teamStatus === 'in-game') {
+          toast.error('The Game has already Begun!')
+        }
+      }
     }
   }
   return (

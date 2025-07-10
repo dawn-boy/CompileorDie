@@ -12,7 +12,6 @@ async function apiJoinedCount(teamCode, roundNum, cycle_num) {
     if (val.haveVoted === true) acc += 1
     return acc
   }, 0)
-  console.log(count)
   return count
 }
 

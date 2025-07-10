@@ -1,5 +1,6 @@
 import apiTriggerRoles from '../../services/gameplay/apiTriggerRoles.js'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const HomePage = () => {
   useEffect(() => {
@@ -8,7 +9,14 @@ const HomePage = () => {
     }
     triggerRoles()
   }, [])
-  return <div>This is the HomePage page.</div>
+  return (
+    <div>
+      <Link to="/login">Login</Link>
+      <br />
+      <Link to="/register">Register</Link>
+      <div>This is the HomePage page.</div>
+    </div>
+  )
 }
 
 export default HomePage

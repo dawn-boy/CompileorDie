@@ -3,6 +3,7 @@ import { joinTeamApi } from '../../services/teams/apiTeamJoin.js'
 import { useNavigate } from 'react-router-dom'
 import { setLobby, setTeamCode } from '../../redux/userSlice.js'
 import { useDispatch } from 'react-redux'
+import toast from 'react-hot-toast'
 
 function useTeamJoin() {
   const navigate = useNavigate()
@@ -20,12 +21,6 @@ function useTeamJoin() {
     onError: (error, variables) => {
       const { teamCode } = variables
       switch (error.message) {
-        case 'JoinTeam not found':
-          navigate('/error', {
-            replace: true,
-            state: { errorMessage: 'JoinTeam not found' },
-          })
-          break
         case 'You have already joined this team':
           dispatch(setLobby(true))
           dispatch(setTeamCode(teamCode))
@@ -33,10 +28,10 @@ function useTeamJoin() {
             replace: true,
           })
           break
-        case 'JoinTeam is full':
+        case 'Team is full':
           navigate('/error', {
             replace: true,
-            state: { errorMessage: 'JoinTeam is full' },
+            state: { errorMessage: 'Team is full' },
           })
           break
         default:

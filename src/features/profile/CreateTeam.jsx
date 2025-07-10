@@ -21,7 +21,6 @@ const CreateTeam = () => {
     async function getTeamData() {
       if (code) {
         const { isFound, data } = await apiFetchTeam(code)
-        console.log(data, isFound)
         if (isFound) setTeamData(data)
       }
     }
@@ -34,7 +33,6 @@ const CreateTeam = () => {
     const teamFound = await apiTeamCheck(teamCode, teamName)
     if (teamFound) {
       toast.error("A Team's legacy already exists!")
-      return
     } else {
       await apiTeamCreate(teamName, teamCode)
       joinTeam({ teamCode })

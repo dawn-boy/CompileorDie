@@ -10,6 +10,8 @@ import updateRecord from '../../services/database/operations/updateRecord.js'
 import getRecord from '../../services/database/operations/getRecord.js'
 import apiSupabase from '../../services/database/apiSupabase.js'
 import capitalize from '../../helpers/capitalize.js'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 function UserGrid({ userData, admin }) {
   const { isLoading, error, isError, togglePlayerStatus } = usePlayerToggle()
@@ -19,12 +21,31 @@ function UserGrid({ userData, admin }) {
   const teamCode = useSelector(state => state.user.teamCode)
   const [difficultyStatus, setDifficultyStatus] = useState('easy')
   const currentUserData = useSelector(state => state.user.userProfileData)
+  const navigate = useNavigate()
   const { currentUser, teamMembers } = splitTeamAndYou(
     userData,
     currentUserData
   )
-  function onSubmit(resp) {
-    setDifficulty(resp)
+  function onSubmit(resp, e) {
+    const action = e.nativeEvent.submitter?.value
+    if (action === 'submit') {
+      setDifficulty(resp)
+    }
+    if (action === 'delete') {
+      apiSupabase
+        .from('teams_table')
+        .delete()
+        .eq('team_code', teamCode)
+        .then(resp => {
+          if (resp.status === 204) {
+            toast.success("It's like it had never existed before")
+            navigate('/profile', { replace: true })
+          }
+          if (resp.error) {
+            toast.error(resp.error.message)
+          }
+        })
+    }
   }
   const options = [
     { label: 'Easy', value: 'easy' },
@@ -106,7 +127,12 @@ function UserGrid({ userData, admin }) {
           <FormProvider {...methods}>
             <Form onSubmit={onSubmit}>
               <Form.LabeledSelect name="difficulty" options={options} />
-              <button>Submit</button>
+              <button type="submit" name="action" value="submit">
+                Submit
+              </button>
+              <button type="submit" name="action" value="delete">
+                Delete Team
+              </button>
             </Form>
           </FormProvider>
         )}

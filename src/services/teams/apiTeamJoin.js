@@ -6,27 +6,41 @@ import apiGetUserId from '../users/apiGetUserId.js'
 import updateRecord from '../database/operations/updateRecord.js'
 
 async function joinTeamApi(teamCode) {
-  const { isFound: teamFound, data: teamData } = await checkRecord(
+  // checking if there's a team available
+  const { data: teamData } = await checkRecord(
     'teams_table',
     'team_code',
     teamCode
   )
-  const teamId = teamData?.id
+
   const currentUser = (await getCurrentUser())?.id
-  const { isFound: playerAlreadyJoined, data: playersDat } = await checkRecord(
+  const { isFound: playerFoundInATeam, data: playersDat } = await checkRecord(
     'players_table',
     'user_id',
     currentUser
   )
+  const teamId = teamData?.id
 
-  if (teamFound) {
-    const { data: playersData } = await getRecord(
-      'players_table',
-      'team_id',
-      teamId
-    )
-    if (playersData.length >= 5) throw new Error('JoinTeam is full')
-    if (playerAlreadyJoined) {
+  // getting all the teamPlayers
+  const { data: playersData } = await getRecord(
+    'players_table',
+    'team_id',
+    teamId
+  )
+
+  // checking if the player is found within the team
+  const playerAlreadyJoined = playersData.find(
+    player => player.user_id === currentUser
+  )
+
+  if (playerAlreadyJoined) throw new Error('You have already joined this team')
+  // if the player is not found within the team
+  if (!playerAlreadyJoined) {
+    // if the team isn't full yet
+    if (playersData.length >= 5) throw new Error('Team is full')
+
+    // if player is present in another team
+    if (playerFoundInATeam) {
       const { data, error } = await updateRecord(
         'players_table',
         'user_id',
@@ -34,15 +48,15 @@ async function joinTeamApi(teamCode) {
         { team_id: teamId }
       )
       return { data, error, teamCode }
-    } else {
-      const { data, error } = insertTable('players_table', {
+    }
+    // if player haven't event joined any teams
+    else {
+      const { data, error } = await insertTable('players_table', {
         team_id: teamId,
         user_id: currentUser,
       })
       return { data, error, teamCode }
     }
   }
-  if (!teamFound) throw new Error('JoinTeam not found')
-  if (playerAlreadyJoined) throw new Error('You have already joined this team')
 }
 export { joinTeamApi }

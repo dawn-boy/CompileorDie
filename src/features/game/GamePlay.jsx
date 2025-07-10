@@ -17,12 +17,14 @@ import End from '../end/End.jsx'
 import updateRecord from '../../services/database/operations/updateRecord.js'
 import ApiSupabase from '../../services/database/apiSupabase.js'
 import FloatAround from './FloatAround.jsx'
+import { useLocation } from 'react-router-dom'
 
 const GamePlay = () => {
+  const location = useLocation()
   const dispatch = useDispatch()
   const roleCheck = useSelector(state => state.user.role)
-  // const role = location?.state?.role || roleCheck
-  const role = 'debugger'
+  const role = location?.state?.role || roleCheck
+  // const role = 'debugger'
   if (!roleCheck) dispatch(setRole(role))
   const round = useSelector(state => state.user.round)
   const teamCode = useSelector(state => state.user.teamCode)
@@ -99,7 +101,7 @@ const GamePlay = () => {
   }, [gameStatus, eliminatedCount, teamCode])
 
   function handleRender() {
-    console.log(gameStatus, eliminatedCount, cycle)
+    console.log(gameStatus, eliminatedCount[false])
     if (gameStatus === null && cycle !== 1)
       return <div>Calculating the Results...</div>
     if (gameStatus === false) {

@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { EditorState } from '@codemirror/state'
-import { EditorView, basicSetup } from 'codemirror'
+import { basicSetup, EditorView } from 'codemirror'
 import { python } from '@codemirror/lang-python'
 import { autocompletion } from '@codemirror/autocomplete'
 import { oneDark } from '@codemirror/theme-one-dark'
